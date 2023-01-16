@@ -5,10 +5,12 @@ import DeviceOrientation, { Orientation } from "react-screen-orientation";
 import { UserContext } from "./Page/UserContext";
 import MusicOnly from "./Page/Music/MusicOnly";
 import "react-h5-audio-player/lib/styles.css";
+import { useEffect } from "react";
 
 const App = () => {
   const [value, setValue] = useState({});
   const [userLogin, setUserLogin] = useState({});
+  const [globalLoading, setGlobalLoading] = useState(true);
   const [selectedAnimalID, setSelectedAnimalID] = useState({
     id: "",
     ternak_id: "",
@@ -23,8 +25,10 @@ const App = () => {
       setSelectedAnimalID,
       userLogin,
       setUserLogin,
+      globalLoading,
+      setGlobalLoading,
     }),
-    [value, selectedAnimalID, userLogin]
+    [value, selectedAnimalID, userLogin, globalLoading]
   );
 
   return (

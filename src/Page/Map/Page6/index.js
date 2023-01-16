@@ -27,7 +27,8 @@ const Page6 = ({
   goToPage17,
   playPop1,
 }) => {
-  const { value, setValue } = useContext(UserContext);
+  const { value, setValue, userLogin, globalLoading, setGlobalLoading } =
+    useContext(UserContext);
   const [telur, setTelur] = useState(null);
   const [daging, setDaging] = useState(null);
   const [susu, setSusu] = useState(null);
@@ -74,9 +75,9 @@ const Page6 = ({
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  });
+      setGlobalLoading(false);
+    }, 3500);
+  }, []);
 
   useEffect(() => {
     let imageList = [bg1, bg2, bg3, bg4, bg5, bg6, bg8, bg9];
@@ -87,7 +88,7 @@ const Page6 = ({
 
   return (
     <>
-      {loading ? (
+      {globalLoading ? (
         <Loading />
       ) : (
         <div className="w-full h-screen overflow-hidden bg-[#26B6AD]  mx-auto lg:max-w-6xl lg:h-[70%] ">

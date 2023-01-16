@@ -16,6 +16,7 @@ module.exports = {
         jualan: "url('../public/img/bg/jualan.webp')",
         city: "url('../public/img/bg/city.webp')",
         loading: "url('../public/img/bg/loading.webp')",
+        loadingFarm: "url('../public/img/bg/farmLoading.jpg')",
       },
       animation: {
         running: "fill 3.5s linear",
