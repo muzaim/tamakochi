@@ -28,6 +28,7 @@ const Page13 = ({
   const [dialogArray, setDialogArray] = useState([]);
   const [questionArray, setQuestionArray] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [allNpcImage, setNpcImage] = useState([]);
 
   const checkNumber = (number) => {
     if (number > avaArray.length - 1) {
@@ -101,6 +102,7 @@ const Page13 = ({
       );
       let res = marketData.data.data;
 
+      console.log(`ini all pc`, allNpcImage);
       // set Market
       setMarket((currentList) => [...currentList, res]);
 
@@ -200,8 +202,15 @@ const Page13 = ({
     getMarket();
     setTimeout(() => {
       setLoading(false);
-    }, 3500);
+    }, 1);
   }, []);
+
+  useEffect(() => {
+    let imageList = avaArray;
+    imageList.forEach((image) => {
+      new Image().src = image;
+    });
+  });
 
   return (
     <>
