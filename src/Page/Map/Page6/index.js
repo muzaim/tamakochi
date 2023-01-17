@@ -76,7 +76,7 @@ const Page6 = ({
   useEffect(() => {
     setTimeout(() => {
       setGlobalLoading(false);
-    }, 3500);
+    }, 3800);
   }, []);
 
   useEffect(() => {
