@@ -4,6 +4,7 @@ import { UserContext } from "../../UserContext";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Loading from "./Loading";
+import standJualan from "../../../img/jualan.webp";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -101,8 +102,6 @@ const Page13 = ({
         `${process.env.REACT_APP_BASE_URL}/request-market`
       );
       let res = marketData.data.data;
-
-      console.log(`ini all pc`, allNpcImage);
       // set Market
       setMarket((currentList) => [...currentList, res]);
 
@@ -271,7 +270,7 @@ const Page13 = ({
                 </div>
                 {/* STAND JUALAN */}
                 <div className="absolute bottom-0 z-20">
-                  <img src="/img/common/jualan.webp" alt="" className="" />
+                  <img src={standJualan} alt="" className="" />
                 </div>
                 {/* BUTTON JUAL SKIP */}
                 <div className="absolute right-3 z-20 top-[6.5rem]">
