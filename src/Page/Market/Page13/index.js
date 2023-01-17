@@ -201,7 +201,7 @@ const Page13 = ({
     getMarket();
     setTimeout(() => {
       setLoading(false);
-    }, 1);
+    }, 3500);
   }, []);
 
   useEffect(() => {
