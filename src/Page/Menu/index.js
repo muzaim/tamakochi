@@ -45,7 +45,7 @@ const Menu = ({ goToFormLogin, goToFormRegister, playPop1 }) => {
               }}
             >
               <span className="group-active:text-[#5e17eb] delay-1000">
-                Masuk
+                MASUK BRO
               </span>
             </div>
 
