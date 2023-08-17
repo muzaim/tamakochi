@@ -3,10 +3,10 @@ import React from "react";
 const ComingSoon = ({ goToPage6, playPaperFlipSound }) => {
 	return (
 		<div className="w-full h-screen overflow-hidden  bg-cover mx-auto lg:max-w-6xl lg:h-[70%] z-30 ">
-			<div className="w-[90%] h-full mx-auto">
-				<div class="min-h-screen bg-gray-800 flex flex-col items-center justify-center">
+			<div className="w-full h-full mx-auto">
+				<div className="min-h-screen bg-gray-800 flex flex-col items-center justify-center">
 					<div className="flex items-center justify-center ">
-						<h1 class="text-[5rem]  font-bold mb-3 text-sky-500">
+						<h1 className="text-[5rem]  font-bold mb-3 text-sky-500">
 							Coming <span className="text-yellow-300">Soon</span>
 						</h1>
 					</div>

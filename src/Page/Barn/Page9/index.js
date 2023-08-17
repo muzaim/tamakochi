@@ -37,7 +37,7 @@ const Page9 = ({ goToPage7, goToPage13, goToPage6 }) => {
     <div className="w-full h-screen overflow-hidden bg-barn bg-cover mx-auto lg:max-w-6xl lg:h-[70%]">
       <div className="w-[90%] h-full mx-auto">
         {/* HEADER */}
-        <div class="h-[15%]">
+        <div className="h-[15%]">
           <Header
             Diamond={true}
             Egg={true}
@@ -50,8 +50,8 @@ const Page9 = ({ goToPage7, goToPage13, goToPage6 }) => {
         </div>
         {/* HEADER END */}
         {/* CONTENT */}
-        <div class="w-full h-[65%]">
-          <div class="w-full h-full justify-center flex items-start">
+        <div className="w-full h-[65%]">
+          <div className="w-full h-full justify-center flex items-start">
             <div className="w-full h-full flex flex-col">
               <div className="w-full h-10 flex justify-center items-center lg:h-20">
                 <span className="text-white text-xl lg:text-3xl ">
@@ -87,7 +87,7 @@ const Page9 = ({ goToPage7, goToPage13, goToPage6 }) => {
         </div>
         {/* CONTENT END*/}
         {/* FOOTER */}
-        <div class="h-[25%] ">
+        <div className="h-[25%] ">
           <div className="grid grid-cols-2">
             <div className="w-full flex justify-center">
               <div className="w-60 lg:w-80">

@@ -96,6 +96,7 @@ const Page7 = ({
 
 	useEffect(() => {
 		getUserTernak();
+
 	}, []);
 	return (
 		<div className="w-full h-screen overflow-hidden bg-barn bg-cover mx-auto lg:max-w-6xl lg:h-[70%] z-30 ">

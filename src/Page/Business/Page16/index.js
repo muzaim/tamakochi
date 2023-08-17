@@ -42,6 +42,7 @@ const Page16 = ({
 		settransactionLog(false);
 	};
 
+	// NOTED DI SINI BRO
 	const getTransactionInquiry = async () => {
 		const userCookie = Cookies.get("user");
 		try {
@@ -57,7 +58,7 @@ const Page16 = ({
 			console.log(res);
 			setTransactionInquiry(res);
 		} catch (error) {
-			console.log(`dari ketika getUsrInfo `, error);
+			console.log(`dari ketika getTransactionInquiry `, error);
 		}
 	};
 
@@ -75,7 +76,7 @@ const Page16 = ({
 			let res = userInfo.data.data;
 			setUserBankData(res);
 		} catch (error) {
-			console.log(`dari ketika getUsrInfo `, error);
+			console.log(`dari ketika getUserBank `, error);
 		}
 	};
 
@@ -113,9 +114,9 @@ const Page16 = ({
 			let res = userInfo.data.Data;
 			setDataUserActive(res.user_active);
 			setDataUserWallet(res.user_wallet);
-			setDaging(res.user_wallet.hasil_ternak[3].qty);
-			setSusu(res.user_wallet.hasil_ternak[2].qty);
-			setTelur(res.user_wallet.hasil_ternak[1].qty);
+			// setDaging(res.user_wallet.hasil_ternak[3].qty);
+			// setSusu(res.user_wallet.hasil_ternak[2].qty);
+			setTelur(res.user_wallet.hasil_ternak["1"].qty);
 		} catch (error) {
 			console.log(`dari ketika getUsrInfo `, error);
 		}

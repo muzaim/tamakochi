@@ -1,10 +1,5 @@
-import React from "react";
-// import DiamondImg from "../../../img/common/diamond.png";
-// import EggImg from "../../../img/common/egg.png";
-// import PouchImg from "../../../img/common/pouch.png";
-// import MeatImg from "../../../img/common/meat.png";
-// import MilkImg from "../../../img/common/milk.png";
-// import QuestBookImg from "../../../img/common/questbook.png";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
@@ -14,7 +9,6 @@ import backSound from "../../../music/back.mp3";
 import paperFlipSound from "../../../music/paperflip.mp3";
 import warningSound from "../../../music/warning.mp3";
 import useSound from "use-sound";
-
 const MySwal = withReactContent(Swal);
 
 const Header = ({
@@ -35,7 +29,7 @@ const Header = ({
 	const [playPaperFlip] = useSound(paperFlipSound);
 	const [playWarningSound] = useSound(warningSound);
 	const [playGoBackSound] = useSound(backSound);
-
+	const navigate = useNavigate();
 	const openPage6 = () => {
 		Action1();
 	};
@@ -61,6 +55,7 @@ const Header = ({
 	};
 	const goToMenu = () => {
 		Cookies.remove("user");
+		navigate("/");
 		ActionLogout();
 		window.location.reload();
 	};

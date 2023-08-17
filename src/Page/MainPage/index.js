@@ -234,6 +234,7 @@ const MainPage = () => {
 			return (
 				<Page3
 					goToPage4={goToPage4}
+					goToPage5={goToPage5}
 					playSelectSound={playSelectSound}
 					playNextDialogSound={playNextDialogSound}
 				/>

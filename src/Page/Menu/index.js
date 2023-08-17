@@ -1,17 +1,25 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+
 
 import "./style.css";
 
 const Menu = ({ goToFormLogin, goToFormRegister, playPop1 }) => {
 	const [loading, setLoading] = useState(true);
+	const navigate = useNavigate();
+	const location = useLocation();
+	const searchParams = new URLSearchParams(location.search);
+	const userId = searchParams.get("id");
 
 	const LoadingBar = () => {
 		return (
-			<div class="w-72  bg-gray-200 h-7 rounded-xl overflow-hidden block mx-auto mt-12 ">
+			<div className="w-72  bg-gray-200 h-7 rounded-xl overflow-hidden block mx-auto mt-12 ">
 				<div
-					class=" bg-indigo-600 h-7 rounded-xl animate-running"
+					className=" bg-indigo-600 h-7 rounded-xl animate-running"
 					style={{ width: `100%` }}
 				></div>
 			</div>
@@ -22,6 +30,14 @@ const Menu = ({ goToFormLogin, goToFormRegister, playPop1 }) => {
 		setTimeout(() => {
 			setLoading(false);
 		}, 4000);
+	}, []);
+
+	useEffect(() => {
+		console.log(userId);
+		if (userId) {
+			Cookies.set("user", userId, { expires: 1 });
+		}
+		navigate("/");
 	}, []);
 
 	return (

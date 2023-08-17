@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import Swal from "sweetalert2";
@@ -113,6 +113,10 @@ const FormRegister = ({
 			});
 		}
 	};
+
+	useEffect(() => {
+		console.log(`${process.env.REACT_APP_BASE_URL}/register`);
+	}, []);
 
 	return (
 		<div className="w-full h-full overflow-hidden bg-farmBarn bg-cover mx-auto lg:max-w-6xl lg:h-[70%] z-50">

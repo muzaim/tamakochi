@@ -60,11 +60,11 @@ const Page6 = ({
 				}
 			);
 			let dataUser = userInfo.data.Data;
-			setDaging(dataUser.user_wallet.hasil_ternak[3].qty);
-			setSusu(dataUser.user_wallet.hasil_ternak[2].qty);
-			setTelur(dataUser.user_wallet.hasil_ternak[1].qty);
+			// setDaging(dataUser.user_wallet.hasil_ternak[3].qty);
+			// setSusu(dataUser.user_wallet.hasil_ternak[2].qty);
+			setTelur(dataUser.user_wallet.hasil_ternak["1"].qty);
 		} catch (error) {
-			console.log(`dari ketika getUsrInfo `, error);
+			console.log(error);
 		}
 	};
 
@@ -238,7 +238,7 @@ const Page6 = ({
 												className="w-8"
 											/>
 										</div>
-										<span className="font-bold  text-sm text-[#782443]">
+										<span className="font-semibold tracking-wide  text-sm text-[#782443]">
 											{numberWithCommas(telur)} Butir
 										</span>
 									</div>

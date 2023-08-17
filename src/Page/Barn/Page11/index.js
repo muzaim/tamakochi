@@ -17,7 +17,7 @@ const Page11 = () => {
         <div className="w-full h-screen overflow-hidden bg-barn bg-left bg-cover opacity-90 lg:max-w-6xl mx-auto">
           <div className="w-[90%] h-full mx-auto">
             {/* HEADER */}
-            <div class="h-16">
+            <div className="h-16">
               <div className="flex h-full justify-between items-center ">
                 <div className="flex gap-2">
                   <div className="w-44 h-10 bg-[#f6f3e4] rounded-full items-center flex">
@@ -71,7 +71,7 @@ const Page11 = () => {
             </div>
             {/* HEADER END */}
             {/* CONTENT */}
-            <div class="grid grid-cols-3 ">
+            <div className="grid grid-cols-3 ">
               <div className="col-span-3 h-12 text-center flex justify-center">
                 <h1 className="text-lg font-semibold text-white tracking-wider ">
                   Sapi, Max penghasil susu 1.020 liter perhari!
