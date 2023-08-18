@@ -163,7 +163,7 @@ const Header = ({
 	const QuestBookDiv = () => {
 		return (
 			<div
-				className=""
+				className="bg-white px-3 mt-1 rounded-full flex items-center gap-1 border-[#782443] border-2"
 				onClick={() => {
 					playPaperFlip();
 					openPage6();
@@ -174,6 +174,9 @@ const Header = ({
 					alt=""
 					className="w-14 mt-1"
 				/>
+				<span className="font-bold  text-xs  text-[#782443] mt-1">
+					Desa
+				</span>
 			</div>
 		);
 	};

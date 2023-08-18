@@ -39,6 +39,38 @@ const Page7 = ({
 	const [userTernak, setUserTernak] = useState([]);
 	const [jumlahUserTernak, setJumlahUserTernak] = useState(1);
 
+	// fungsi per hari
+	const [activity, setActivity] = useState("");
+	const [currentTime, setCurrentTime] = useState(new Date());
+
+	const activities = [
+		{ label: "Feeding", startTime: 7, endTime: 10 },
+		{ label: "Vaccine", startTime: 11, endTime: 14 },
+		{ label: "Cleaning", startTime: 15, endTime: 18 },
+	];
+
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setCurrentTime(new Date());
+		}, 1000);
+
+		return () => clearInterval(timer);
+	}, []);
+
+	useEffect(() => {
+		const currentHour = currentTime.getHours();
+		let foundActivity = null;
+
+		for (const act of activities) {
+			if (currentHour >= act.startTime && currentHour <= act.endTime) {
+				foundActivity = act.label;
+				break;
+			}
+		}
+		console.log(jumlahUserTernak);
+		setActivity(foundActivity);
+	}, []);
+
 	// INI PEMBATAS YA
 	// HAHA PEMBATS DOANG KOK
 
@@ -88,7 +120,7 @@ const Page7 = ({
 			let dataUser = userInfo.data.Data;
 
 			setUserTernak(dataUser);
-			setJumlahUserTernak(dataUser.length);
+			// setJumlahUserTernak(dataUser.length);
 		} catch (error) {
 			console.log(`dari ketika getUsrInfo `, error);
 		}
@@ -96,7 +128,6 @@ const Page7 = ({
 
 	useEffect(() => {
 		getUserTernak();
-
 	}, []);
 	return (
 		<div className="w-full h-screen overflow-hidden bg-barn bg-cover mx-auto lg:max-w-6xl lg:h-[70%] z-30 ">
@@ -530,8 +561,8 @@ const Page7 = ({
 				</div>
 				{/* CONTENT END*/}
 				{/* FOOTER */}
-				<div className="h-[20%] animate-fadeInKu">
-					<div className="flex justify-center  items-center">
+				<div className="h-[20%] animate-fadeInKu bg-red-600">
+					<div className="flex justify-between  items-center">
 						<div
 							className="w-44 py-3 bg-gradient-to-r from-cyan-300 to-blue-700 rounded-full  text-center group active:bg-gradient-to-r active:from-blue-500 active:to-cyan-500"
 							onClick={() => {
@@ -543,6 +574,19 @@ const Page7 = ({
 								Tambah ternak
 							</span>
 						</div>
+						{jumlahUserTernak >= 1 && activity && (
+							<div
+								className="w-44 py-3 bg-gradient-to-r from-cyan-300 to-blue-700 rounded-full  text-center group active:bg-gradient-to-r active:from-blue-500 active:to-cyan-500"
+								onClick={() => {
+									playDoorOpen();
+									goToPage12();
+								}}
+							>
+								<span className="font-semibold capitalize text-base tracking-wider  text-white ">
+									{activity}
+								</span>
+							</div>
+						)}
 					</div>
 				</div>
 				{/* FOOTER END*/}

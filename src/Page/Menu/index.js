@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-
 import "./style.css";
 
 const Menu = ({ goToFormLogin, goToFormRegister, playPop1 }) => {
@@ -43,7 +42,7 @@ const Menu = ({ goToFormLogin, goToFormRegister, playPop1 }) => {
 	return (
 		<div className="w-full h-full overflow-hidden  bg-farmBarn bg-cover mx-auto lg:max-w-6xl lg:h-[70%] z-30">
 			<div className="h-full">
-				<div className="flex h-full items-end justify-center pb-5 ">
+				<div className="flex h-full items-end justify-center pb-5 -mt-10">
 					<div className="grid gap-2 mt-40">
 						<div className="block mx-auto mb-3  animate-running">
 							<img
@@ -65,7 +64,7 @@ const Menu = ({ goToFormLogin, goToFormRegister, playPop1 }) => {
 							</span>
 						</button>
 
-						<div className="block mx-auto py-2 px-12 rounded-3xl uppercase tracking-[0.15rem]  text-white  ">
+						{/* <div className="block mx-auto py-2 px-12 rounded-3xl uppercase tracking-[0.15rem]  text-white  ">
 							Belum punya akun?
 							<span className=" uppercase group">
 								<span
@@ -78,7 +77,7 @@ const Menu = ({ goToFormLogin, goToFormRegister, playPop1 }) => {
 									buat akun
 								</span>
 							</span>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</div>
