@@ -353,7 +353,7 @@ const Page16 = ({
 								<div className=" w-full h-20 ">
 									<div className="flex justify-between px-2 w-full border-b-2 ">
 										<span className="font-semibold">
-											Diamond
+											Gems
 										</span>
 										<span className="font-light">
 											{dataUserWallet.diamon}
@@ -407,7 +407,7 @@ const Page16 = ({
 											opentransactionLog();
 										}}
 									>
-										Transaction Log
+										Histori Peternakan
 									</span>
 								</div>
 								<div
@@ -428,7 +428,7 @@ const Page16 = ({
 											openwithdrawalPanel();
 										}}
 									>
-										Withdrawal
+										Tukar Hadiah
 									</span>
 								</div>
 							</div>

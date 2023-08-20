@@ -281,6 +281,8 @@ const MainPage = () => {
 					playCow={playCow}
 					playGoat={playGoat}
 					playRooster={playRooster}
+					playGoBackSound={playGoBackSound}
+					playSelectSound={playSelectSound}
 					playPop1={playPop1}
 					playDoorOpen={playDoorOpen}
 				/>

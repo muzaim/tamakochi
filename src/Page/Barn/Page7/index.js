@@ -32,21 +32,22 @@ const Page7 = ({
 	playGoat,
 	playRooster,
 	playPop1,
+	playGoBackSound,
 	goToMenu,
 	playDoorOpen,
 }) => {
 	const { value, setValue, setSelectedAnimalID } = useContext(UserContext);
 	const [userTernak, setUserTernak] = useState([]);
-	const [jumlahUserTernak, setJumlahUserTernak] = useState(1);
+	const [jumlahUserTernak, setJumlahUserTernak] = useState(0);
 
 	// fungsi per hari
 	const [activity, setActivity] = useState("");
 	const [currentTime, setCurrentTime] = useState(new Date());
 
 	const activities = [
-		{ label: "Feeding", startTime: 7, endTime: 10 },
-		{ label: "Vaccine", startTime: 11, endTime: 14 },
-		{ label: "Cleaning", startTime: 15, endTime: 18 },
+		{ label: "Beri Pakan", startTime: 7, endTime: 10 },
+		{ label: "Berikan Vaksin", startTime: 11, endTime: 14 },
+		{ label: "Bersihkan Kandang", startTime: 15, endTime: 18 },
 	];
 
 	useEffect(() => {
@@ -67,12 +68,31 @@ const Page7 = ({
 				break;
 			}
 		}
-		console.log(jumlahUserTernak);
 		setActivity(foundActivity);
 	}, []);
 
 	// INI PEMBATAS YA
 	// HAHA PEMBATS DOANG KOK
+
+	const openFeedingPopUp = () => {
+		MySwal.fire({
+			title: "Beri Pakan",
+			position: "center",
+			text: `Apakah kamu akan memberi pakan ternak di  kandang ini?`,
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			confirmButtonText: "Ya",
+			cancelButtonText: "Tidak",
+			cancelButtonColor: "#d33",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				console.log(`result ok`);
+			} else {
+				playGoBackSound();
+				console.log(`result cancel`);
+			}
+		});
+	};
 
 	const checkPlaySound = (ternak_id) => {
 		if (ternak_id === "1") {
@@ -117,10 +137,10 @@ const Page7 = ({
 					},
 				}
 			);
-			let dataUser = userInfo.data.Data;
+			let dataUser = userInfo.data.group;
 
 			setUserTernak(dataUser);
-			// setJumlahUserTernak(dataUser.length);
+			setJumlahUserTernak(dataUser.length);
 		} catch (error) {
 			console.log(`dari ketika getUsrInfo `, error);
 		}
@@ -160,104 +180,40 @@ const Page7 = ({
 								{/* Jumlah user ternak =1*/}
 								{jumlahUserTernak === 1 ? (
 									<div className="flex   w-full h-full overflow-hidden ">
-										{userTernak.map((item) => {
+										{userTernak.map((item, idx) => {
 											const {
-												id,
-												name,
+												durasi,
+												nama,
 												avatar,
-												time_now,
-												pakan_start,
-												pakan_end,
-												umur_end,
-												pakan_status,
+												jumlah,
 											} = item;
-											// INI
-											// const hariIni = Math.round(new Date().getTime() / 1000);
 
-											const start = new Date(
-												pakan_start
-											).valueOf();
-											const now = new Date(
-												time_now
-											).valueOf();
-											const end = new Date(
-												pakan_end
-											).valueOf();
-
-											let finalHasil = 0;
-											if (start === now) {
-												finalHasil = 0;
-											} else {
-												const hasil =
-													((now - start) /
-														(end - start)) *
-													100;
-												finalHasil = 100 - hasil;
-											}
-
-											//INI
-
-											// Durasi
-											const startDate = time_now;
-											const endDate = umur_end;
-
-											const diffInMs =
-												new Date(endDate) -
-												new Date(startDate);
-											const beda =
-												diffInMs /
-												(1000 * 60 * 60 * 24);
-											// Durasi
 											return (
 												<div
-													key={id}
+													key={idx}
 													className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer -mt-3 w-full"
-													onClick={() =>
-														openPage8(item)
-													}
+													onClick={() => {
+														playPop1();
+														openFeedingPopUp();
+													}}
 												>
 													<div className="w-[90%] h-[80%]">
 														<div className="flex flex-col items-center my-5">
 															<p className="text-xs font-bold uppercase font-custom1 mt-2 text-center z-10">
-																{name}
+																{nama}
 															</p>
 															<p className="text-xs  uppercase font-custom1 mb-2 text-center z-10">
+																Jumlah :{" "}
 																{Math.round(
-																	beda
+																	jumlah
 																)}{" "}
 																Hari
 															</p>
 															<img
 																src={avatar}
 																alt=""
-																className={
-																	pakan_status ===
-																	1
-																		? `w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64  mb-1`
-																		: `w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`
-																}
+																className={`w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`}
 															/>
-															{pakan_status ? (
-																<div className="w-24 bg-gray-200 h-2 rounded-full overflow-hidden lg:w-72 lg:h-10 mb-3">
-																	<div
-																		className="bg-[#7fa65a] h-2 rounded-full lg:h-10"
-																		style={{
-																			width: `${Math.round(
-																				finalHasil
-																			)}%`,
-																		}}
-																	></div>
-																</div>
-															) : (
-																<div className="w-24  h-2 rounded-full overflow-hidden lg:w-72 lg:h-10 mb-3">
-																	{/* <div
-                                        className="bg-[#7fa65a] h-2 rounded-full lg:h-10"
-                                        style={{
-                                          width: `${Math.round(finalHasil)}%`,
-                                        }}
-                                      ></div> */}
-																</div>
-															)}
 														</div>
 													</div>
 												</div>
@@ -310,102 +266,39 @@ const Page7 = ({
 								{/* Jumlah user ternak =2 */}
 								{jumlahUserTernak === 2 ? (
 									<div className="flex w-full h-full overflow-hidden ">
-										{userTernak.map((item) => {
+										{userTernak.map((item, idx) => {
 											const {
-												id,
-												name,
+												durasi,
+												nama,
 												avatar,
-												time_now,
-												pakan_start,
-												pakan_end,
-												pakan_status,
-												umur_end,
+												jumlah,
 											} = item;
-											// INI
-											// const hariIni = Math.round(new Date().getTime() / 1000);
-											const start = new Date(
-												pakan_start
-											).valueOf();
-											const now = new Date(
-												time_now
-											).valueOf();
-											const end = new Date(
-												pakan_end
-											).valueOf();
 
-											let finalHasil = 0;
-											if (start === now) {
-												finalHasil = 0;
-											} else {
-												const hasil =
-													((now - start) /
-														(end - start)) *
-													100;
-												finalHasil = 100 - hasil;
-											}
-											//INI
-
-											// Durasi
-											const startDate = time_now;
-											const endDate = umur_end;
-
-											const diffInMs =
-												new Date(endDate) -
-												new Date(startDate);
-											const beda =
-												diffInMs /
-												(1000 * 60 * 60 * 24);
-											// Durasi
 											return (
 												<div
-													key={id}
+													key={idx}
 													className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer -mt-3 w-full"
-													onClick={() =>
-														openPage8(item)
-													}
+													onClick={() => {
+														playPop1();
+														openFeedingPopUp();
+													}}
 												>
 													<div className="w-[90%] h-[80%]">
 														<div className="flex flex-col items-center my-5">
 															<p className="text-xs font-bold uppercase font-custom1 mt-2 text-center z-10">
-																{name}
+																{nama}
 															</p>
 															<p className="text-xs  uppercase font-custom1 mb-2 text-center z-10">
+																Jumlah :{" "}
 																{Math.round(
-																	beda
+																	jumlah
 																)}{" "}
-																Hari
 															</p>
 															<img
 																src={avatar}
 																alt=""
-																className={
-																	pakan_status ===
-																	1
-																		? `w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64  mb-1`
-																		: `w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`
-																}
+																className={`w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`}
 															/>
-															{pakan_status ? (
-																<div className="w-24 bg-gray-200 h-2 rounded-full overflow-hidden lg:w-72 lg:h-10 mb-3">
-																	<div
-																		className="bg-[#7fa65a] h-2 rounded-full lg:h-10"
-																		style={{
-																			width: `${Math.round(
-																				finalHasil
-																			)}%`,
-																		}}
-																	></div>
-																</div>
-															) : (
-																<div className="w-24  h-2 rounded-full overflow-hidden lg:w-72 lg:h-10 mb-3">
-																	{/* <div
-                                        className="bg-[#7fa65a] h-2 rounded-full lg:h-10"
-                                        style={{
-                                          width: `${Math.round(finalHasil)}%`,
-                                        }}
-                                      ></div> */}
-																</div>
-															)}
 														</div>
 													</div>
 												</div>
@@ -446,70 +339,68 @@ const Page7 = ({
 												dynamicBullets: true,
 											}}
 										>
-											{userTernak.map((item) => {
+											{userTernak.map((item, idx) => {
 												const {
-													id,
-													name,
+													durasi,
+													nama,
 													avatar,
-													time_now,
-													pakan_start,
-													pakan_end,
-													umur_end,
-													pakan_status,
+													jumlah,
 												} = item;
 
-												const start = new Date(
-													pakan_start
-												).valueOf();
-												const now = new Date(
-													time_now
-												).valueOf();
-												const end = new Date(
-													pakan_end
-												).valueOf();
+												// const start = new Date(
+												// 	pakan_start
+												// ).valueOf();
+												// const now = new Date(
+												// 	time_now
+												// ).valueOf();
+												// const end = new Date(
+												// 	pakan_end
+												// ).valueOf();
 
-												let finalHasil = 0;
-												if (start === now) {
-													finalHasil = 0;
-												} else {
-													const hasil =
-														((now - start) /
-															(end - start)) *
-														100;
-													finalHasil = 100 - hasil;
-												}
+												// let finalHasil = 0;
+												// if (start === now) {
+												// 	finalHasil = 0;
+												// } else {
+												// 	const hasil =
+												// 		((now - start) /
+												// 			(end - start)) *
+												// 		100;
+												// 	finalHasil = 100 - hasil;
+												// }
 
-												//INI
+												// //INI
 
-												// Durasi
-												const startDate = time_now;
-												const endDate = umur_end;
+												// // Durasi
+												// const startDate = time_now;
+												// const endDate = umur_end;
 
-												const diffInMs =
-													new Date(endDate) -
-													new Date(startDate);
-												const beda =
-													diffInMs /
-													(1000 * 60 * 60 * 24);
-												// Durasi
+												// const diffInMs =
+												// 	new Date(endDate) -
+												// 	new Date(startDate);
+												// const beda =
+												// 	diffInMs /
+												// 	(1000 * 60 * 60 * 24);
+												// // Durasi
 
 												return (
-													<SwiperSlide key={id}>
+													<SwiperSlide key={idx}>
 														<div
-															key={id}
+															key={idx}
 															className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3 "
-															onClick={() =>
-																openPage8(item)
-															}
+															onClick={() => {
+																playPop1();
+																openFeedingPopUp();
+															}}
 														>
 															<div className="w-[90%] h-[80%]">
 																<div className="flex flex-col items-center my-7">
 																	<p className="text-xs font-bold uppercase font-custom1 mt-2 text-center z-10">
-																		{name}
+																		{nama}
 																	</p>
 																	<p className="text-xs  uppercase font-custom1 mb-2 text-center z-10">
+																		Jumlah :{" "}
 																		{Math.round(
-																			beda
+																			jumlah
 																		)}{" "}
 																		Hari
 																	</p>
@@ -518,34 +409,8 @@ const Page7 = ({
 																			avatar
 																		}
 																		alt=""
-																		className={
-																			pakan_status ===
-																			1
-																				? `w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 mb-1`
-																				: `w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`
-																		}
+																		className={`w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`}
 																	/>
-																	{pakan_status ? (
-																		<div className="w-24 bg-gray-200 h-2 rounded-full overflow-hidden lg:w-72 lg:h-10 mb-3">
-																			<div
-																				className="bg-[#7fa65a] h-2 rounded-full lg:h-10"
-																				style={{
-																					width: `${Math.round(
-																						finalHasil
-																					)}%`,
-																				}}
-																			></div>
-																		</div>
-																	) : (
-																		<div className="w-24  h-2 rounded-full overflow-hidden lg:w-72 lg:h-10 mb-3">
-																			{/* <div
-                                        className="bg-[#7fa65a] h-2 rounded-full lg:h-10"
-                                        style={{
-                                          width: `${Math.round(finalHasil)}%`,
-                                        }}
-                                      ></div> */}
-																		</div>
-																	)}
 																</div>
 															</div>
 														</div>
@@ -561,7 +426,7 @@ const Page7 = ({
 				</div>
 				{/* CONTENT END*/}
 				{/* FOOTER */}
-				<div className="h-[20%] animate-fadeInKu bg-red-600">
+				<div className="h-[20%] animate-fadeInKu">
 					<div className="flex justify-between  items-center">
 						<div
 							className="w-44 py-3 bg-gradient-to-r from-cyan-300 to-blue-700 rounded-full  text-center group active:bg-gradient-to-r active:from-blue-500 active:to-cyan-500"
