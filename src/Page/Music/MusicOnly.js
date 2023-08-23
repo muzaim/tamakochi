@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeHigh, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
+import {
+	faVolumeHigh,
+	faVolumeMute,
+	faBell,
+} from "@fortawesome/free-solid-svg-icons";
+
 // import ReactAudioPlayer from "react-audio-player";
 import "./style.css";
 import AudioPlayer from "react-h5-audio-player";
@@ -12,6 +17,7 @@ import useSound from "use-sound";
 
 const MusicPlay = <FontAwesomeIcon icon={faVolumeHigh} />;
 const MusicMute = <FontAwesomeIcon icon={faVolumeMute} />;
+// const Bell =  />;
 
 // const MusicOnly = () => {
 //   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
@@ -46,24 +52,25 @@ const MusicMute = <FontAwesomeIcon icon={faVolumeMute} />;
 // export default MusicOnly;
 
 const MusicOnly = () => {
-  // const [play] = useSound(song);
+	// const [play] = useSound(song);
 
-  return (
-    <div className="absolute z-20 bottom-6 right-16">
-      <AudioPlayer
-        autoPlay
-        loop
-        volume={0.6}
-        showFilledVolume={false}
-        showSkipControls={false}
-        showJumpControls={false}
-        // showFilledProgress={false}
-        customIcons={MusicMute}
-        // showDownloadProgress={false}
-        src={song}
-      />
-    </div>
-  );
+	return (
+		<div className="absolute z-20 bottom-6 right-16 flex justify-center items-center gap-1">
+
+			<AudioPlayer
+				autoPlay
+				loop
+				volume={0.6}
+				showFilledVolume={false}
+				showSkipControls={false}
+				showJumpControls={false}
+				// showFilledProgress={false}
+				customIcons={MusicMute}
+				// showDownloadProgress={false}
+				src={song}
+			/>
+		</div>
+	);
 };
 
 export default MusicOnly;

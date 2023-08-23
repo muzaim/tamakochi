@@ -15,6 +15,7 @@ import bg6 from "../../../img/jualan.webp";
 import bg7 from "../../../img/farmLoading.webp";
 import bg8 from "../../../img/shop.webp";
 import bg9 from "../../../img/city.webp";
+import MusicOnly from "../../Music/MusicOnly";
 
 const MySwal = withReactContent(Swal);
 const Page6 = ({
@@ -26,6 +27,7 @@ const Page6 = ({
 	goToPage16,
 	goToPage17,
 	playPop1,
+	goToNotifPage,
 }) => {
 	const { value, setValue, userLogin, globalLoading, setGlobalLoading } =
 		useContext(UserContext);
@@ -99,16 +101,17 @@ const Page6 = ({
 								<Header
 									Diamond={true}
 									LogOut={true}
+									NotifPage={true}
 									ActionLogout={goToMenu}
 									harta={value}
 									setHarta={setValue}
+									goToNotifPage={goToNotifPage}
 								/>
 							</div>
 							{/* HEADER END */}
 							{/* CONTENT */}
 							<div className="relative h-[50%] ">
 								{/* TES MUSIC */}
-
 								{/* TES MUSIC */}
 								{/* KE Warung */}
 								<div

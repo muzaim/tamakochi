@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket, faBell } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -23,6 +23,8 @@ const Header = ({
 	Action1,
 	Action2,
 	ActionLogout,
+	NotifPage,
+	goToNotifPage,
 	harta,
 }) => {
 	const [playPop1] = useSound(backSound);
@@ -181,6 +183,20 @@ const Header = ({
 		);
 	};
 
+	const NotifPageDiv = () => {
+		return (
+			<div
+				className=" bg-[#26B6AD] rounded-full items-center flex active:bg-[#51a9d5] overflow-hidden"
+				onClick={goToNotifPage}
+			>
+				<FontAwesomeIcon
+					icon={faBell}
+					className="text-2xl text-white"
+				/>
+			</div>
+		);
+	};
+
 	const LogOutDiv = () => {
 		return (
 			<div
@@ -227,17 +243,23 @@ const Header = ({
 					{/* MILK END */}
 				</div>
 
-				{/* QUEST BOOK */}
-				{QuestBook ? <QuestBookDiv /> : null}
-				{/* QUEST BOOK END*/}
+				<div className="flex gap-3">
+					{/* QUEST BOOK */}
+					{QuestBook ? <QuestBookDiv /> : null}
+					{/* QUEST BOOK END*/}
 
-				{/* QUEST BOOK */}
-				{LogOut ? <LogOutDiv /> : null}
-				{/* QUEST BOOK END*/}
+					{/* QUEST BOOK */}
+					{NotifPage ? <NotifPageDiv /> : null}
+					{/* QUEST BOOK END*/}
 
-				{/* QUEST BOOK */}
-				{BackButton ? <BackButtonDiv /> : null}
-				{/* QUEST BOOK END*/}
+					{/* QUEST BOOK */}
+					{LogOut ? <LogOutDiv /> : null}
+					{/* QUEST BOOK END*/}
+
+					{/* QUEST BOOK */}
+					{BackButton ? <BackButtonDiv /> : null}
+					{/* QUEST BOOK END*/}
+				</div>
 			</div>
 		);
 	};

@@ -15,6 +15,7 @@ import {
 	Page16,
 	Page17,
 	ComingSoon,
+	NotifPage,
 } from "../index";
 import FormLogin from "../Menu/Login/FormLogin";
 import FormRegister from "../Menu/Register/FormRegister";
@@ -125,6 +126,10 @@ const MainPage = () => {
 
 	const goToComingSoon = () => {
 		setStep("ComingSoon");
+	};
+
+	const goToNotifPage = () => {
+		setStep("NotifPage");
 	};
 
 	const getUserInfo = async () => {
@@ -268,6 +273,7 @@ const MainPage = () => {
 					playPop1={playPop1}
 					playWarningSound={playWarningSound}
 					playGoBackSound={playGoBackSound}
+					goToNotifPage={goToNotifPage}
 				/>
 			);
 		case "Page7":
@@ -380,6 +386,13 @@ const MainPage = () => {
 			);
 		case "ComingSoon":
 			return <ComingSoon />;
+		case "NotifPage":
+			return (
+				<NotifPage
+					goToPage6={goToPage6}
+					playPaperFlipSound={playPaperFlipSound}
+				/>
+			);
 		default:
 			break;
 	}

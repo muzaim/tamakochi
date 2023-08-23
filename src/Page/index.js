@@ -20,6 +20,8 @@ import Rotate from "./Rotate";
 
 import ComingSoon from "./ComingSoon";
 
+import NotifPage from "./NotifPage";
+
 export {
 	Menu,
 	MainPage,
@@ -40,4 +42,5 @@ export {
 	Simple,
 	Rotate,
 	ComingSoon,
+	NotifPage,
 };
