@@ -114,7 +114,7 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData }) => {
 											{dataPost.diamond ? (
 												<p className="">
 													Amount :{" "}
-													<span className="font-bold">
+													<span className="font-bold text-black">
 														Rp.
 														{numberWithCommas(
 															dataPost.diamond *

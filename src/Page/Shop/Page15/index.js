@@ -51,6 +51,24 @@ const Page15 = ({
 		setDiamondPanel(false);
 	};
 
+	const testData = [
+		{
+			id: 1,
+			diamond: "100",
+			tools: 10000,
+		},
+		{
+			id: 2,
+			diamond: "200",
+			tools: 20000,
+		},
+		{
+			id: 3,
+			diamond: "300",
+			tools: 30000,
+		}
+	]
+
 	const tangkapDiamondDipilih = (e) => {
 		// setDiamondDipilih(e.currentTarget.getAttribute("data-id"));
 		setDiamondDipilih({
@@ -167,30 +185,36 @@ const Page15 = ({
 		});
 	};
 
-	const buyDiamond = async () => {
+	const buyDiamond = async (id) => {
 		const userCookie = Cookies.get("user");
-
 		try {
-			let beli = await axios.post(
-				`https://tamakoci.com/api/v2/buy-diamon`,
+			let beli = await axios.get(
+				`${process.env.REACT_APP_BASE_URL}/beli-tools/${diamodDipilih.id}`,
 				{
-					token: userCookie,
-					diamon_id: diamodDipilih.id,
+					params: {
+						token: userCookie,
+					},
 				}
 			);
 			let res = beli.data.data;
 			setDiamondDipilih("");
-			console.log(res.url);
-			// window.location.replace(`${res.url}`);
-			window.location.href = res.url;
-
-			// window.open(res.url, "_blank");
+			MySwal.fire({
+				position: "center",
+				icon: "success",
+				text: "Pembelian berhasil!",
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			playSuccessSound();
+			setTimeout(() => {
+				getUserInfo();
+			}, 1650);
 		} catch (error) {
 			playNegativeSound();
 			MySwal.fire({
 				position: "center",
 				icon: "error",
-				text: error.response.data.message,
+				text: error,
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -263,12 +287,14 @@ const Page15 = ({
 
 	return (
 		<div className="w-full h-screen overflow-hidden bg-outFarm bg-cover mx-auto lg:max-w-6xl lg:h-[70%] z-30">
-			<div className="w-[90%] h-full mx-auto">
+			<div className="w-[90%] h-full mx-auto ">
 				{/* HEADER */}
 				<div className="h-[15%]">
 					<Header
 						Diamond={true}
 						Pouch={true}
+						Vaksin={true}
+						Tools={true}
 						harta={value}
 						setHarta={setValue}
 						QuestBook={true}
@@ -277,46 +303,70 @@ const Page15 = ({
 				</div>
 				{/* HEADER END */}
 				{/* CONTENT */}
-				<div className="w-full">
+				<div className="w-full h-[50%] mt-10">
 					<div className="flex justify-around  w-full mt-2  rounded-t-xl mb-3">
-						<div
-							className={`${
-								diamondPanel
+						{/* <div
+							className={`${diamondPanel
 									? "border-x-[1px] border-t-[1px] border-white  rounded-t-xl w-full h-full py-3 text-center"
 									: "w-full h-full py-3 text-center border-b-[1px] border-white"
-							}`}
+								}`}
 						>
 							<span
-								className={`${
-									diamondPanel
+								className={`${diamondPanel
 										? "text-white text-xl cursor-pointer font-bold"
 										: "text-white text-xl cursor-pointer"
-								}`}
+									}`}
 								onClick={openDiamondPanel}
 							>
 								Top Up Diamond
 							</span>
 						</div>
 						<div
-							className={`${
-								pakanPanel
+							className={`${pakanPanel
 									? "border-x-[1px] border-t-[1px] border-white rounded-t-xl w-full h-full py-3 text-center"
 									: "w-full h-full py-3 text-center border-b-[1px] border-white"
-							}`}
+								}`}
 						>
 							<span
-								className={`${
-									pakanPanel
+								className={`${pakanPanel
 										? "text-white text-xl cursor-pointer font-bold"
 										: "text-white text-xl cursor-pointer"
-								}`}
+									}`}
 								onClick={openPakanPanel}
 							>
 								Top Up Pakan
 							</span>
+						</div> */}
+						<div className="grid grid-rows-12 grid-cols-3 grid-flow-col gap-3 place-items-center">
+							{testData.map((item, idx) => {
+								const { id, diamond, tools } = item;
+								return (
+									<button
+										type="button"
+										className="w-[11.5rem]  py-2 bg-[#f0ecd8] rounded-full items-center flex justify-center border-transparent focus:outline-none focus:ring-sky-400 focus: focus:ring-2 "
+										key={idx}
+										data-id={id}
+										data-diamond={diamond}
+										onClick={(e) => {
+											playSelectSound();
+											tangkapDiamondDipilih(e);
+										}}
+									>
+										<img src="/img/common/package.png" alt="" className="w-6" />
+										<span className="font-bold  text-xs text-sky-400">
+											{numberWithCommas(diamond)}
+										</span>
+										<span className="font-semibold mx-1">=</span>
+										<span></span>
+										<span className="font-semibold text-xs">
+											Rp {numberWithCommas(tools)}
+										</span>
+									</button>
+								);
+							})}
 						</div>
 					</div>
-					{diamondPanel ? (
+					{/* {diamondPanel ? (
 						<TopUpDiamond
 							daftarHargaDiamond={daftarHargaDiamond}
 							tangkapDiamondDipilih={tangkapDiamondDipilih}
@@ -328,37 +378,41 @@ const Page15 = ({
 							tangkapPakanDipilih={tangkapPakanDipilih}
 							numberWithCommas={numberWithCommas}
 						/>
-					)}
+					)} */}
 				</div>
 				{/* CONTENT END*/}
 				{/* FOOTER */}
-				{/* <div className="grid grid-cols-2 mt-5">
-          <div className=" px-10 flex justify-end">
-            <button
-              type="button"
-              className="w-44 h-full bg-gradient-to-r from-pink-400 to-red-600 active:bg-gradient-to-r active:from-red-500 active:to-pink-500  rounded-full py-3 text-center "
-              onClick={() => {
-                playGoBackSound();
-                goToPage6();
-              }}
-            >
-              <div className="font-semibold capitalize text-lg tracking-wider text-white">
-                kembali
-              </div>
-            </button>
-          </div>
-          <div className=" px-10 flex justify-start">
-            <button
-              type="button"
-              className="w-44 h-full bg-gradient-to-r from-cyan-400 to-blue-600 active:bg-gradient-to-r active:from-blue-500 active:to-cyan-500  rounded-full py-3 text-center"
-              onClick={diamondPanel ? tanyaBuyDiamond : tanyaBuyPakan}
-            >
-              <div className="font-semibold capitalize text-lg tracking-wider text-white">
-                Top Up
-              </div>
-            </button>
-          </div>
-        </div> */}
+				<div className="w-full h-[15%] ">
+					<div className="grid grid-cols-2">
+						<div className=" px-10 flex justify-end">
+							<button
+								type="button"
+								className="w-44 h-full bg-gradient-to-r from-pink-400 to-red-600 active:bg-gradient-to-r active:from-red-500 active:to-pink-500  rounded-full py-3 text-center "
+								onClick={() => {
+									playGoBackSound();
+									goToPage6();
+								}}
+							>
+								<div className="font-semibold capitalize text-lg tracking-wider text-white">
+									kembali
+								</div>
+							</button>
+						</div>
+						<div className=" px-10 flex justify-start">
+							<button
+								type="button"
+								className="w-44 h-full bg-gradient-to-r from-cyan-400 to-blue-600 active:bg-gradient-to-r active:from-blue-500 active:to-cyan-500  rounded-full py-3 text-center"
+								onClick={
+									diamondPanel ? tanyaBuyDiamond : tanyaBuyPakan
+								}
+							>
+								<div className="font-semibold capitalize text-lg tracking-wider text-white">
+									Top Up
+								</div>
+							</button>
+						</div>
+					</div>
+				</div>
 				{/* FOOTER END*/}
 			</div>
 		</div>

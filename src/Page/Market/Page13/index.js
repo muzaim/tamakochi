@@ -151,7 +151,7 @@ const Page13 = ({
 				`${process.env.REACT_APP_BASE_URL}/market-sell`,
 				{
 					token: userCookie,
-					market_id: index,
+					market_id: index + 1,
 				}
 			);
 			let message = userInfo.data.message;

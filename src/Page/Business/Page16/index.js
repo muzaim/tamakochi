@@ -47,7 +47,7 @@ const Page16 = ({
 		const userCookie = Cookies.get("user");
 		try {
 			let userInfo = await axios.get(
-				`https://tamakoci.com/api/v2/trx-inquiry`,
+				`${process.env.REACT_APP_BASE_URL}/trx-inquiry`,
 				{
 					params: {
 						token: userCookie,
@@ -55,7 +55,6 @@ const Page16 = ({
 				}
 			);
 			let res = userInfo.data.data;
-			console.log(res);
 			setTransactionInquiry(res);
 		} catch (error) {
 			console.log(`dari ketika getTransactionInquiry `, error);
@@ -80,6 +79,10 @@ const Page16 = ({
 		}
 	};
 
+	function numberWithCommas(num) {
+		let newNum = parseInt(num);
+		return newNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	const getUserInfo = async () => {
 		const userCookie = Cookies.get("user");
 		if (!userCookie) {
@@ -142,7 +145,7 @@ const Page16 = ({
 
 	const TransactionLogPanel = () => {
 		return (
-			<div className="w-full h-[115%]  overflow-x-auto animate-fadeInKu -mt-8 bg-transparent">
+			<div className="w-full h-[115%]  overflow-x-auto animate-fadeInKu -mt-8 ">
 				<table className="table-auto w-full border-collapse border text-center ">
 					<thead className="bg-slate-600 sticky top-0 text-white">
 						<tr className="">
@@ -157,7 +160,7 @@ const Page16 = ({
 							<tr>
 								<td
 									colSpan={4}
-									className="border border-slate-300 py-2"
+									className="border py-2 text-black border-slate-400"
 								>
 									No Data!
 								</td>
@@ -166,16 +169,16 @@ const Page16 = ({
 						{transactionInquiry.map((item, idx) => {
 							return (
 								<tr key={idx}>
-									<td className="w-[10%] border border-slate-300 py-2">
+									<td className="w-[10%] border border-slate-400 py-2 text-black">
 										{idx + 1}
 									</td>
-									<td className="w-[40%] border border-slate-300 py-2">
+									<td className="w-[40%] border border-slate-400 py-2 text-black">
 										{item.desc}
 									</td>
-									<td className="w-[20%] border border-slate-300 py-2">
+									<td className="w-[20%] border border-slate-400 py-2 text-black">
 										{item.status}
 									</td>
-									<td className="w-[40%] border border-slate-300 py-2">
+									<td className="w-[40%] border border-slate-400 py-2">
 										<button
 											type="button"
 											onClick={() =>
@@ -257,7 +260,7 @@ const Page16 = ({
 								<tr>
 									<td
 										colSpan={4}
-										className=" border border-slate-300 py-2"
+										className=" border py-2 text-black border-slate-400"
 									>
 										No Data!
 									</td>
@@ -266,16 +269,16 @@ const Page16 = ({
 							{userBankData.map((item, idx) => {
 								return (
 									<tr key={item.id}>
-										<td className="w-[10%] border border-slate-300 py-2">
+										<td className="w-[10%] border border-slate-300 py-2 text-black">
 											{idx + 1}
 										</td>
-										<td className="w-[20%] border border-slate-300 py-2">
+										<td className="w-[20%] border border-slate-300 py-2 text-black">
 											{item.bank_name}
 										</td>
-										<td className="w-[30%] border border-slate-300 py-2">
+										<td className="w-[30%] border border-slate-300 py-2 text-black">
 											{item.account_name}
 										</td>
-										<td className="w-[40%] border border-slate-300 py-2">
+										<td className="w-[40%] border border-slate-300 py-2 text-black">
 											{item.account_number}
 										</td>
 									</tr>
@@ -317,16 +320,16 @@ const Page16 = ({
 					{/* CONTENT */}
 					<div className="w-full flex h-[80%] ">
 						{/* kiri */}
-						<div className="w-[30%] h-full px-4 animate-fadeInKu flex items-center py-3 ">
-							<div className="mx-auto w-full h-[100%] flex flex-col items-center justify-center bg-transparent border rounded-lg px-1 ">
-								<div className="mt-10 mb-3">
+						<div className="w-[30%] h-full mr-4 animate-fadeInKu flex items-center ">
+							<div className="mx-auto w-full h-[100%]  flex flex-col items-center justify-center bg-white bg-opacity-80  rounded-lg px-1 ">
+								<div className="mt-10 mb-3 flex flex-col items-center">
 									<img
 										src={dataUserActive.avatar}
 										alt=""
-										className="w-24 h-24  rounded-full -mt-12  border-2 border-cyan-500 object-cover"
+										className="w-24 h-24  rounded-full -mt-12  border-2 border-cyan-500 object-cover "
 										loading="lazy"
 									/>
-									<span className="uppercase my-1 tracking-widest text-gray-800 px-2 font-semibold">
+									<span className="uppercase my-1 tracking-widest text-gray-800 px-2 font-semibold ">
 										{dataUserActive.username}
 									</span>
 								</div>
@@ -350,29 +353,39 @@ const Page16 = ({
                   </span>
                 </div> */}
 								{/* REFERAL */}
-								<div className=" w-full h-20 ">
-									<div className="flex justify-between px-2 w-full border-b-2 ">
-										<span className="font-semibold">
-											Gems
-										</span>
+								<div className=" w-full h-20 text-black">
+									<div className="flex justify-between px-2 w-full border-b border-b-black">
+										<img
+											src="/img/common/diamond.webp"
+											alt=""
+											className="w-5 h-5"
+										/>
 										<span className="font-light">
-											{dataUserWallet.diamon}
+											{numberWithCommas(
+												dataUserWallet.diamon
+											)}
 										</span>
 									</div>
-									<div className="flex justify-between px-2 w-full border-b-2 ">
-										<span className="font-semibold">
-											Pakan
-										</span>
+									<div className="flex justify-between px-2 w-full border-b border-b-black py-1">
+										<img
+											src="/img/common/pouch.webp"
+											alt=""
+											className="w-5 h-5"
+										/>
 										<span className="font-light">
-											{dataUserWallet.pakan}
+											{numberWithCommas(
+												dataUserWallet.pakan
+											)}
 										</span>
 									</div>
-									<div className="flex justify-between px-2 w-full border-b-2 ">
-										<span className="font-semibold">
-											Telur
-										</span>
+									<div className="flex justify-between px-2 w-full border-b border-b-black">
+										<img
+											src="/img/common/egg.webp"
+											alt=""
+											className="w-5 h-5 "
+										/>
 										<span className="font-light">
-											{telur}
+											{numberWithCommas(telur)}
 										</span>
 									</div>
 									{/* <div className="flex justify-between px-2 w-full border-b-2 ">
@@ -387,20 +400,20 @@ const Page16 = ({
 							</div>
 						</div>
 						{/* kanan */}
-						<div className="w-full h-full px-5 flex flex-col justify-center items-center py-3 ">
+						<div className="w-full h-full px-5 flex flex-col justify-center items-center py-3 bg-white bg-opacity-80 rounded-xl">
 							<div className="flex justify-around  w-full h-[40%]  bg-transparent rounded-xl  ">
 								<div
 									className={`${
 										transactionLog
-											? "border-x-[1px] border-t-[1px] border-white rounded-t-xl w-full h-[60%]  py-3 text-center"
-											: "w-full h-[60%]  py-3 text-center border-b-[1px] border-white"
+											? "border-x-[1px] border-t-[1px]  rounded-t-xl border-black  w-full h-[60%]  py-3 text-center"
+											: "w-full h-[60%]  py-3 text-center border-b-[1px]  border-black rounded-t-xl"
 									}`}
 								>
 									<span
 										className={`${
 											transactionLog
-												? "font-bold text-white text-xl cursor-pointer"
-												: "text-white text-xl cursor-pointer"
+												? "font-bold text-black text-xl cursor-pointer"
+												: "text-black text-xl cursor-pointer"
 										}`}
 										onClick={() => {
 											playSelectSound();
@@ -413,15 +426,15 @@ const Page16 = ({
 								<div
 									className={`${
 										withdrawalPanel
-											? "border-x-[1px] border-t-[1px] border-white rounded-t-xl w-full  h-[60%]   py-3 text-center"
-											: "w-full  h-[60%] py-3 text-center border-b-[1px] border-white"
+											? "border-x-[1px] border-t-[1px]   border-black rounded-t-xl w-full  h-[60%]   py-3 text-center"
+											: "w-full  h-[60%] py-3 text-center border-b-[1px]  border-black rounded-t-xl"
 									}`}
 								>
 									<span
 										className={`${
 											withdrawalPanel
-												? "font-bold text-white text-xl cursor-pointer"
-												: "text-white text-xl cursor-pointer"
+												? "font-bold text-black text-xl cursor-pointer"
+												: "text-black text-xl cursor-pointer"
 										}`}
 										onClick={() => {
 											playSelectSound();

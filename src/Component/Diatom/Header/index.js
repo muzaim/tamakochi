@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faBell } from "@fortawesome/free-solid-svg-icons";
@@ -9,10 +9,13 @@ import backSound from "../../../music/back.mp3";
 import paperFlipSound from "../../../music/paperflip.mp3";
 import warningSound from "../../../music/warning.mp3";
 import useSound from "use-sound";
+import axios from "axios";
 const MySwal = withReactContent(Swal);
 
 const Header = ({
 	Diamond,
+	Tools,
+	Vaksin,
 	Egg,
 	Pouch,
 	Milk,
@@ -31,6 +34,8 @@ const Header = ({
 	const [playPaperFlip] = useSound(paperFlipSound);
 	const [playWarningSound] = useSound(warningSound);
 	const [playGoBackSound] = useSound(backSound);
+	const [countDataNotif, setcountDataNotif] = useState([]);
+
 	const navigate = useNavigate();
 	const openPage6 = () => {
 		Action1();
@@ -55,6 +60,31 @@ const Header = ({
 			}
 		});
 	};
+
+	const getDataNotif = async () => {
+		const userCookie = Cookies.get("user");
+
+		try {
+			const response = await axios.get(
+				`${process.env.REACT_APP_BASE_URL}/notif-user`,
+				{
+					params: {
+						token: userCookie,
+					},
+				}
+			);
+			let countDataNotifnya = response.data.data.count;
+
+			setcountDataNotif(countDataNotifnya);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		getDataNotif();
+	}, []);
+
 	const goToMenu = () => {
 		Cookies.remove("user");
 		navigate("/");
@@ -88,7 +118,7 @@ const Header = ({
 
 	const EggDiv = () => {
 		return (
-			<div className="w-32 h-10 bg-white rounded-full items-center flex">
+			<div className="w-24 h-10 bg-white rounded-full items-center flex">
 				<div className="w-20 flex items-center justify-center ">
 					<img src="/img/common/egg.webp" alt="" className="w-8" />
 				</div>
@@ -103,7 +133,7 @@ const Header = ({
 
 	const PouchDiv = () => {
 		return (
-			<div className="w-32 h-10 bg-white rounded-full items-center flex">
+			<div className="w-24 h-10 bg-white rounded-full items-center flex">
 				<div className="w-20 flex items-center justify-center ">
 					<img src="/img/common/pouch.webp" alt="" className="w-8" />
 				</div>
@@ -115,6 +145,37 @@ const Header = ({
 			</div>
 		);
 	};
+	const ToolsDiv = () => {
+		return (
+			<div className="w-24 h-10 bg-white rounded-full items-center flex">
+				<div className="w-20 flex items-center justify-center ">
+					<img src="/img/common/spray.png" alt="" className="w-8" />
+				</div>
+				<div className="w-full text-start  h-full grid items-center">
+					<span className="font-bold  text-xs text-[#782443]">
+						{numberWithCommas(harta.tools)}
+					</span>
+				</div>
+			</div>
+		);
+	};
+
+	const VaksinDiv = () => {
+		return (
+			<div className="w-24 h-10 bg-white rounded-full items-center flex">
+				<div className="w-20 flex items-center justify-center ">
+					<img src="/img/common/injection.png" alt="" className="w-8" />
+				</div>
+				<div className="w-full text-start  h-full grid items-center">
+					<span className="font-bold  text-xs text-[#782443]">
+						{numberWithCommas(harta.vaksin)}
+					</span>
+				</div>
+			</div>
+		);
+	};
+
+
 
 	const MilkDiv = () => {
 		return (
@@ -186,13 +247,21 @@ const Header = ({
 	const NotifPageDiv = () => {
 		return (
 			<div
-				className=" bg-[#26B6AD] rounded-full items-center flex active:bg-[#51a9d5] overflow-hidden"
-				onClick={goToNotifPage}
+				className=" bg-[#26B6AD] w-10 h-10 relative grid place-content-center  overflow-hidden"
+				onClick={() => {
+					goToNotifPage();
+					playWarningSound();
+				}}
 			>
 				<FontAwesomeIcon
 					icon={faBell}
 					className="text-2xl text-white"
 				/>
+				{countDataNotif > 0 && (
+					<div className="absolute top-0 right-[0.5px] w-5 h-5 bg-[#E02954] border rounded-full flex justify-center items-center text-white text-xs">
+						<span>{countDataNotif}</span>
+					</div>
+				)}
 			</div>
 		);
 	};
@@ -233,6 +302,14 @@ const Header = ({
 					{/* POUCH */}
 					{Pouch ? <PouchDiv /> : null}
 					{/* POUCH END */}
+
+					{/* Tools */}
+					{Tools ? <ToolsDiv /> : null}
+					{/* Tools END */}
+
+					{/* Vaksin */}
+					{Vaksin ? <VaksinDiv /> : null}
+					{/* Tools END */}
 
 					{/* Meat */}
 					{Meat ? <MeatDiv /> : null}

@@ -32,14 +32,14 @@ const Page6 = ({
 	const { value, setValue, userLogin, globalLoading, setGlobalLoading } =
 		useContext(UserContext);
 	const [telur, setTelur] = useState(null);
-	const [daging, setDaging] = useState(null);
-	const [susu, setSusu] = useState(null);
-	const [loading, setLoading] = useState(true);
 
 	function numberWithCommas(num) {
 		let newNum = parseInt(num);
 		return newNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
+
+	
+
 	const getUserInfo2 = async () => {
 		const userCookie = Cookies.get("user");
 		if (!userCookie) {
