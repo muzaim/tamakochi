@@ -42,9 +42,36 @@ const Page7 = ({
 
 	// fungsi per hari
 	const [activity, setActivity] = useState({});
+	const [activityStatus, setActivityStatus] = useState([]);
 	const [currentTime, setCurrentTime] = useState(new Date());
 	const [showActionButton, setShowActionButton] = useState(true);
-
+	// const activities = [
+	// 	{ label: "Beri Pakan", startTime: 7, endTime: 11, url: "beri-pakan" },
+	// 	{
+	// 		label: "Berikan Vaksin",
+	// 		startTime: 12,
+	// 		endTime: 14,
+	// 		url: "beri-vaksin",
+	// 	},
+	// 	{
+	// 		label: "Bersihkan Kandang",
+	// 		startTime: 15,
+	// 		endTime: 18,
+	// 		url: "bersih-kandang",
+	// 	},
+	// 	{
+	// 		label: "Test aja sih",
+	// 		startTime: 20,
+	// 		endTime: 21,
+	// 		url: "beri-vaksin",
+	// 	},
+	// 	{
+	// 		label: "Ambil Telur",
+	// 		startTime: 0,
+	// 		endTime: 6,
+	// 		url: "ambil-telur",
+	// 	},
+	// ];
 	const activities = [
 		{ label: "Beri Pakan", startTime: 7, endTime: 11, url: "beri-pakan" },
 		{
@@ -62,7 +89,7 @@ const Page7 = ({
 		{
 			label: "Ambil Telur",
 			startTime: 19,
-			endTime: 24,
+			endTime: 23,
 			url: "ambil-telur",
 		},
 		{
@@ -84,17 +111,20 @@ const Page7 = ({
 			const timeDiff = endTime - currentTime;
 			const totalDiff = endTime - startTime; // Total time difference between start time and end time
 			const percentage = (timeDiff / totalDiff) * 100;
+			console.log(`ini start`, startTime);
+			console.log(`ini end`, endTime);
+			console.log(`ini current`, currentTime);
+			console.log(`ini percentage`, percentage);
 			if (percentage <= 0) {
 				clearInterval(interval);
 				setProgress(0);
 			} else {
 				setProgress(percentage);
 			}
-		}, 300000);
+		}, 1000);
 		return () => {
 			clearInterval(interval);
 		};
-
 	}, [startTime, endTime]);
 
 	function getDefaultStartTime() {
@@ -129,7 +159,6 @@ const Page7 = ({
 		setEndTime(newEndTime);
 	}
 
-
 	const tanyaHandleKerjaan = (url, label, st, et) => {
 		MySwal.fire({
 			icon: "question",
@@ -151,7 +180,7 @@ const Page7 = ({
 
 	const handleKerjaan = async (url, st, et) => {
 		const userCookie = Cookies.get("user");
-
+		// console.log(url, st, et);
 		try {
 			const response = await axios.get(
 				`${process.env.REACT_APP_BASE_URL}/${url}`,
@@ -165,21 +194,14 @@ const Page7 = ({
 				icon: "info",
 				position: "center",
 				text: ` ${response.data.message} `,
-				// showCancelButton: true,
-				// confirmButtonColor: "#3085d6",
-				// confirmButtonText: "Ya",
-				// cancelButtonText: "Tidak",
-				// cancelButtonColor: "#d33",
 			});
 
 			// fungsi bar
 			const hasilResponse = response.data.status;
 			const messageTelur = response.data.message;
 			if (hasilResponse === 200) {
-				console.log(`ini kena 200`);
-
-				if (messageTelur === "Ambil Telur Sukses") {
-					setShowActionButton(true)
+				if (messageTelur === "Ambil Telur Success") {
+					setShowActionButton(true);
 				} else {
 					handleSetStartTime(st, new Date().getMinutes());
 					handleSetEndTime(et, 59);
@@ -188,12 +210,11 @@ const Page7 = ({
 			} else if (hasilResponse === 401) {
 				console.log(`ini kena 401`);
 			}
-
-
 		} catch (error) {
 			console.log(`dari ketika handleKerjaan `, error);
 		}
-	}
+	};
+
 
 	// useEffect(() => {
 	// 	const timer = setInterval(() => {
@@ -203,7 +224,7 @@ const Page7 = ({
 	// 	return () => clearInterval(timer);
 	// }, []);
 
-	useEffect(() => {
+	const setTheActivity = async () => {
 		const currentHour = currentTime.getHours();
 		let foundActivity = {};
 
@@ -215,12 +236,67 @@ const Page7 = ({
 					startTime: new Date().getHours(),
 					endTime: act.endTime,
 				};
-				setShowActionButton(true)
+				setShowActionButton(true);
 				break;
 			}
 		}
 		setActivity(foundActivity);
-	}, []);
+		getActivityStatus(foundActivity);
+	}
+	const getActivityStatus = async (actNya) => {
+		const userCookie = Cookies.get("user");
+		try {
+			let userInfo = await axios.get(
+				`${process.env.REACT_APP_BASE_URL}/activity-status`,
+				{
+					params: {
+						token: userCookie,
+					},
+				}
+			);
+			let dataActivity = userInfo.data.data;
+			setActivityStatus(dataActivity);
+			console.log(`actnya label`, actNya.label);
+			const dateString = dataActivity.last_act;
+			const date = new Date(dateString);
+			console.log(`hanya date`, date);
+			if (actNya.label === "Beri Pakan") {
+				if (dataActivity.pakan_date === 0) {
+					console.log(`belum kasih pakan`);
+					setShowActionButton(true);
+				} else {
+					setShowActionButton(false);
+					console.log(`sudah kasih pakan`);
+					handleSetStartTime(date.getHours(), date.getMinutes());
+					handleSetEndTime(11, 59);
+				}
+			} else if (actNya.label === "Berikan Vaksin") {
+				if (dataActivity.vaksin_date === 0) {
+					console.log(`belum kasih vaksin`);
+					setShowActionButton(true);
+				} else {
+					console.log(`sudah kasih vaksin`);
+					setShowActionButton(false);
+					handleSetStartTime(date.getHours(), date.getMinutes());
+					handleSetEndTime(14, 59);
+				}
+			} else if (actNya.label === "Bersihkan Kandang") {
+				if (dataActivity.kandag_date === 0) {
+					console.log(`belum kasih kandang`);
+					setShowActionButton(true);
+				} else {
+					console.log(`sudah kasih kandang`);
+					setShowActionButton(false);
+					handleSetStartTime(date.getHours(), date.getMinutes());
+					handleSetEndTime(18, 59);
+				}
+			} else {
+				setShowActionButton(true);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	// INI PEMBATAS YA
 	// HAHA PEMBATS DOANG KOK
@@ -299,6 +375,8 @@ const Page7 = ({
 
 	useEffect(() => {
 		getUserTernak();
+		// getActivityStatus();
+		setTheActivity()
 	}, []);
 
 	return (
@@ -593,21 +671,28 @@ const Page7 = ({
 								Tambah ternak
 							</span>
 						</div> */}
-						{jumlahUserTernak >= 1 && activity && showActionButton && (
-							<div
-								className="w-44 py-3 bg-gradient-to-r from-cyan-300 to-blue-700 rounded-full  text-center group active:bg-gradient-to-r active:from-blue-500 active:to-cyan-500"
-								onClick={() => {
-									tanyaHandleKerjaan(activity.url, activity.label, activity.startTime, activity.endTime);
-								}}
-							>
-								<span className="font-semibold capitalize text-base tracking-wider  text-white ">
-									{activity.label}
-								</span>
-							</div>
-						)}
+						{jumlahUserTernak >= 1 &&
+							activity &&
+							showActionButton && (
+								<div
+									className="w-44 py-3 bg-gradient-to-r from-cyan-300 to-blue-700 rounded-full  text-center group active:bg-gradient-to-r active:from-blue-500 active:to-cyan-500"
+									onClick={() => {
+										tanyaHandleKerjaan(
+											activity.url,
+											activity.label,
+											activity.startTime,
+											activity.endTime
+										);
+									}}
+								>
+									<span className="font-semibold capitalize text-base tracking-wider  text-white ">
+										{activity.label}
+									</span>
+								</div>
+							)}
 						{!showActionButton && (
 							<div className="flex flex-col justify-center items-center">
-								<span className="font-semibold capitalize text-base tracking-wider  text-black ">
+								<span className="font-semibold capitalize text-sm tracking-wider  text-black py-1 px-3 bg-white rounded-xl mb-1 ">
 									{activity.label}
 								</span>
 								<div className="w-44 bg-gray-300 rounded-xl overflow-hidden">
@@ -618,7 +703,6 @@ const Page7 = ({
 								</div>
 							</div>
 						)}
-
 					</div>
 				</div>
 				{/* FOOTER END*/}

@@ -100,7 +100,7 @@ const Page15 = ({
 		}
 		try {
 			let userInfo = await axios.get(
-				`${process.env.REACT_APP_BASE_URL}/harga-diamon`,
+				`${process.env.REACT_APP_BASE_URL}/beli-tools-info`,
 				{
 					params: {
 						token: userCookie,
@@ -121,7 +121,7 @@ const Page15 = ({
 			MySwal.fire({
 				position: "center",
 				icon: "warning",
-				text: "Pilih diamond terlebih dahulu!",
+				text: "Pilih Tools terlebih dahulu!",
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -129,9 +129,9 @@ const Page15 = ({
 		}
 		playPop1();
 		MySwal.fire({
-			title: "Beli Diamond",
+			title: "Beli Tools",
 			position: "center",
-			text: `Apakah kamu yakin ingin membeli ${diamodDipilih.diamond} diamond?`,
+			text: `Apakah kamu yakin ingin membeli Tools ${diamodDipilih.diamond} Day?`,
 			showCancelButton: true,
 			confirmButtonColor: "#3085d6",
 			confirmButtonText: "Ya",
@@ -338,29 +338,34 @@ const Page15 = ({
 							</span>
 						</div> */}
 						<div className="grid grid-rows-12 grid-cols-3 grid-flow-col gap-3 place-items-center">
-							{testData.map((item, idx) => {
-								const { id, diamond, tools } = item;
+							{daftarHargaDiamond.map((item, idx) => {
+								const { day, cost } = item;
 								return (
 									<button
 										type="button"
 										className="w-[11.5rem]  py-2 bg-[#f0ecd8] rounded-full items-center flex justify-center border-transparent focus:outline-none focus:ring-sky-400 focus: focus:ring-2 "
 										key={idx}
-										data-id={id}
-										data-diamond={diamond}
+										data-id={day}
+										data-diamond={day}
 										onClick={(e) => {
 											playSelectSound();
 											tangkapDiamondDipilih(e);
 										}}
 									>
 										<img src="/img/common/package.png" alt="" className="w-6" />
-										<span className="font-bold  text-xs text-sky-400">
-											{numberWithCommas(diamond)}
+										<span className="font-bold  text-xs text-black ml-1">
+											{numberWithCommas(day)}{" "}Day
 										</span>
 										<span className="font-semibold mx-1">=</span>
 										<span></span>
-										<span className="font-semibold text-xs">
-											Rp {numberWithCommas(tools)}
-										</span>
+										<div className="flex justify-center gap-1 items-center">
+											<img
+												src="/img/common/diamond.webp"
+												alt=""
+												className="w-6"
+											/>
+											<span className="font-bold  text-xs text-sky-400">{numberWithCommas(cost)}</span>
+										</div>
 									</button>
 								);
 							})}
