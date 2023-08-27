@@ -42,11 +42,11 @@ const Page13 = ({
 	};
 
 	const checkAvatarIndex = (number) => {
-		if (number > avaArray.length - 6) {
+		if (number > avaArray.length - 4) {
 			return 0;
 		}
 		if (number < 0) {
-			return avaArray.length - 6;
+			return avaArray.length - 4;
 		}
 		return number;
 	};
@@ -61,6 +61,8 @@ const Page13 = ({
 			let newIndex = index + 1;
 			return checkAvatarIndex(newIndex);
 		});
+		console.log(`ini index`, index);
+		console.log(`ini indexAvatar`, indexAvatar);
 	};
 
 	const openBackDialog = () => {
@@ -201,7 +203,7 @@ const Page13 = ({
 		getMarket();
 		setTimeout(() => {
 			setLoading(false);
-		}, 3800);
+		}, 100);
 	}, []);
 
 	useEffect(() => {
@@ -238,28 +240,28 @@ const Page13 = ({
 								<div className="absolute w-full h-32  bottom-[3.5rem] z-10">
 									<div className="absolute">
 										<img
-											src={avaArray[indexAvatar + 5]}
+											src={avaArray[indexAvatar + 1]}
 											alt=""
 											className="w-24 "
 										/>
 									</div>
 									<div className="absolute left-20">
 										<img
-											src={avaArray[indexAvatar + 4]}
+											src={avaArray[indexAvatar + 3]}
 											alt=""
 											className="w-24 "
 										/>
 									</div>
 									<div className="absolute left-40">
 										<img
-											src={avaArray[indexAvatar + 3]}
+											src={avaArray[indexAvatar + 2]}
 											alt=""
 											className="w-24 "
 										/>
 									</div>
 									<div className="absolute left-60">
 										<img
-											src={avaArray[indexAvatar + 2]}
+											src={avaArray[indexAvatar + 1]}
 											alt=""
 											className="w-24 "
 										/>

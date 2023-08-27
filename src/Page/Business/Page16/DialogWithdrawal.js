@@ -69,7 +69,7 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData }) => {
 													defaultValue={1}
 													name="user_bank_id"
 												>
-													{userBankData.map(
+													{/* {userBankData.map(
 														(item, idx) => {
 															return (
 																<option
@@ -88,7 +88,7 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData }) => {
 																</option>
 															);
 														}
-													)}
+													)} */}
 												</select>
 											</div>
 										</div>
@@ -118,7 +118,7 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData }) => {
 														Rp.
 														{numberWithCommas(
 															dataPost.diamond *
-																100
+															100
 														)}
 													</span>
 												</p>

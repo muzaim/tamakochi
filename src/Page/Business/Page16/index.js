@@ -65,14 +65,16 @@ const Page16 = ({
 		const userCookie = Cookies.get("user");
 		try {
 			let userInfo = await axios.get(
-				`${process.env.REACT_APP_BASE_URL}/user-bank-get`,
+				`${process.env.REACT_APP_BASE_URL}/rekening-user`,
 				{
 					params: {
 						token: userCookie,
 					},
 				}
 			);
+
 			let res = userInfo.data.data;
+			console.log(res);
 			setUserBankData(res);
 		} catch (error) {
 			console.log(`dari ketika getUserBank `, error);
@@ -213,7 +215,7 @@ const Page16 = ({
 		return (
 			<div className="w-full h-[115%] overflow-x-auto bg-transparent animate-fadeInKu -mt-8">
 				<div className="flex gap-2 flex-col justify-center items-center ">
-					<div className="flex w-full px-6 justify-between">
+					{/* <div className="flex w-full px-6 justify-between">
 						<h1>Bank : </h1>
 						<div className="flex gap-2">
 							<button
@@ -231,7 +233,7 @@ const Page16 = ({
 								Add
 							</button>
 						</div>
-					</div>
+					</div> */}
 					{/* DIALOG WITHDRAWAL */}
 					<DialogWithdrawal
 						isOpen={isOpenWithdrawal}
@@ -249,14 +251,13 @@ const Page16 = ({
 					<table className="table-auto w-full border-collapse border text-center  ">
 						<thead className="bg-slate-600 sticky top-0 text-white">
 							<tr className="">
-								<th className="w-[10%] py-3">No</th>
 								<th className="w-[20%] py-3">Bank Name</th>
 								<th className="w-[30%] ">Account Name</th>
 								<th className="w-[40%]">Account Number</th>
 							</tr>
 						</thead>
 						<tbody className="text-white">
-							{userBankData.length === 0 ? (
+							{!userBankData.nama_bank && (
 								<tr>
 									<td
 										colSpan={4}
@@ -265,25 +266,20 @@ const Page16 = ({
 										No Data!
 									</td>
 								</tr>
-							) : null}
-							{userBankData.map((item, idx) => {
-								return (
-									<tr key={item.id}>
-										<td className="w-[10%] border border-slate-300 py-2 text-black">
-											{idx + 1}
-										</td>
-										<td className="w-[20%] border border-slate-300 py-2 text-black">
-											{item.bank_name}
-										</td>
-										<td className="w-[30%] border border-slate-300 py-2 text-black">
-											{item.account_name}
-										</td>
-										<td className="w-[40%] border border-slate-300 py-2 text-black">
-											{item.account_number}
-										</td>
-									</tr>
-								);
-							})}
+							)}
+							<tr >
+
+								<td className="w-[20%] border border-slate-300 py-2 text-black">
+									{userBankData.nama_bank}
+								</td>
+								<td className="w-[30%] border border-slate-300 py-2 text-black">
+									{userBankData.nama_akun}
+								</td>
+								<td className="w-[40%] border border-slate-300 py-2 text-black">
+									{userBankData.no_rek}
+								</td>
+							</tr>
+
 						</tbody>
 					</table>
 				</div>
@@ -403,18 +399,16 @@ const Page16 = ({
 						<div className="w-full h-full px-5 flex flex-col justify-center items-center py-3 bg-white bg-opacity-80 rounded-xl">
 							<div className="flex justify-around  w-full h-[40%]  bg-transparent rounded-xl  ">
 								<div
-									className={`${
-										transactionLog
-											? "border-x-[1px] border-t-[1px]  rounded-t-xl border-black  w-full h-[60%]  py-3 text-center"
-											: "w-full h-[60%]  py-3 text-center border-b-[1px]  border-black rounded-t-xl"
-									}`}
+									className={`${transactionLog
+										? "border-x-[1px] border-t-[1px]  rounded-t-xl border-black  w-full h-[60%]  py-3 text-center"
+										: "w-full h-[60%]  py-3 text-center border-b-[1px]  border-black rounded-t-xl"
+										}`}
 								>
 									<span
-										className={`${
-											transactionLog
-												? "font-bold text-black text-xl cursor-pointer"
-												: "text-black text-xl cursor-pointer"
-										}`}
+										className={`${transactionLog
+											? "font-bold text-black text-xl cursor-pointer"
+											: "text-black text-xl cursor-pointer"
+											}`}
 										onClick={() => {
 											playSelectSound();
 											opentransactionLog();
@@ -424,18 +418,16 @@ const Page16 = ({
 									</span>
 								</div>
 								<div
-									className={`${
-										withdrawalPanel
-											? "border-x-[1px] border-t-[1px]   border-black rounded-t-xl w-full  h-[60%]   py-3 text-center"
-											: "w-full  h-[60%] py-3 text-center border-b-[1px]  border-black rounded-t-xl"
-									}`}
+									className={`${withdrawalPanel
+										? "border-x-[1px] border-t-[1px]   border-black rounded-t-xl w-full  h-[60%]   py-3 text-center"
+										: "w-full  h-[60%] py-3 text-center border-b-[1px]  border-black rounded-t-xl"
+										}`}
 								>
 									<span
-										className={`${
-											withdrawalPanel
-												? "font-bold text-black text-xl cursor-pointer"
-												: "text-black text-xl cursor-pointer"
-										}`}
+										className={`${withdrawalPanel
+											? "font-bold text-black text-xl cursor-pointer"
+											: "text-black text-xl cursor-pointer"
+											}`}
 										onClick={() => {
 											playSelectSound();
 											openwithdrawalPanel();

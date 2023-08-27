@@ -376,7 +376,7 @@ const Page7 = ({
 	useEffect(() => {
 		getUserTernak();
 		// getActivityStatus();
-		setTheActivity()
+		setTheActivity();
 	}, []);
 
 	return (
