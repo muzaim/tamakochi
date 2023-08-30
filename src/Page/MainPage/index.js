@@ -271,6 +271,7 @@ const MainPage = () => {
 					goToPage16={goToPage16}
 					goToPage17={goToPage17}
 					playPop1={playPop1}
+					playDoorOpen={playDoorOpen}
 					playWarningSound={playWarningSound}
 					playGoBackSound={playGoBackSound}
 					goToNotifPage={goToNotifPage}
@@ -289,8 +290,12 @@ const MainPage = () => {
 					playRooster={playRooster}
 					playGoBackSound={playGoBackSound}
 					playSelectSound={playSelectSound}
+					playSuccessSound={playSuccessSound}
 					playPop1={playPop1}
 					playDoorOpen={playDoorOpen}
+					playWarningSound={playWarningSound}
+					getUserInfo={getUserInfo}
+					playNegativeSound={playNegativeSound}
 				/>
 			);
 		case "Page8":
@@ -317,20 +322,20 @@ const MainPage = () => {
 			);
 		case "Page12":
 			return (
-				// <Page12
-				// 	goToMenu={goToMenu}
-				// 	goToPage6={goToPage6}
-				// 	goToPage7={goToPage7}
-				// 	getUserInfo={getUserInfo}
-				// 	playPop1={playPop1}
-				// 	playSuccessSound={playSuccessSound}
-				// 	playNegativeSound={playNegativeSound}
-				// 	playGoBackSound={playGoBackSound}
-				// />
-				<ComingSoon
+				<Page12
+					goToMenu={goToMenu}
 					goToPage6={goToPage6}
-					playPaperFlipSound={playPaperFlipSound}
+					goToPage7={goToPage7}
+					getUserInfo={getUserInfo}
+					playPop1={playPop1}
+					playSuccessSound={playSuccessSound}
+					playNegativeSound={playNegativeSound}
+					playGoBackSound={playGoBackSound}
 				/>
+				// <ComingSoon
+				// 	goToPage6={goToPage6}
+				// 	playPaperFlipSound={playPaperFlipSound}
+				// />
 			);
 		case "Page13":
 			return (
@@ -340,6 +345,7 @@ const MainPage = () => {
 					getUserInfo={getUserInfo}
 					playPop1={playPop1}
 					playSelectSound={playSelectSound}
+					playDoorOpen={playDoorOpen}
 					playGoBackSound={playGoBackSound}
 					playSuccessSound={playSuccessSound}
 					playNegativeSound={playNegativeSound}
@@ -373,16 +379,16 @@ const MainPage = () => {
 			);
 		case "Page17":
 			return (
-				// <Page17
-				// 	goToPage6={goToPage6}
-				// 	playSuccessSound={playSuccessSound}
-				// 	playSelectSound={playSelectSound}
-				// 	playPaperFlipSound={playPaperFlipSound}
-				// />
-				<ComingSoon
+				<Page17
 					goToPage6={goToPage6}
+					playSuccessSound={playSuccessSound}
+					playSelectSound={playSelectSound}
 					playPaperFlipSound={playPaperFlipSound}
 				/>
+				// <ComingSoon
+				// 	goToPage6={goToPage6}
+				// 	playPaperFlipSound={playPaperFlipSound}
+				// />
 			);
 		case "ComingSoon":
 			return <ComingSoon />;

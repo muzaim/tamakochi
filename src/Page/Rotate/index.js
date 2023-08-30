@@ -2,8 +2,9 @@ import React from "react";
 import "./style.css";
 const Rotate = () => {
   return (
-    <div className="w-full h-screen relative bg-pumkin object-cover">
-      {/* <div
+    <div className="w-full h-screen relative bg-pumkin2 bg-cover ">
+      <div className="w-full h-full bg-black bg-opacity-40">
+        {/* <div
         className="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
         role="alert"
       >
@@ -25,14 +26,17 @@ const Rotate = () => {
           </div>
         </div>
       </div>*/}
-      {/* <img src="/img/usage/rotate.webp" alt="" /> */}
-      <img
-        src="/img/bg/rotate.gif"
-        alt=""
-        className="translate-x-1 img-hor-vert "
-      />
-      <div className="absolute top-[50%] left-20">
-        <span>Rotate your phone</span>
+        {/* <img src="/img/usage/rotate.webp" alt="" /> */}
+        <div className="absolute top-[5rem] w-full flex justify-center items-center flex-col gap-3">
+          <span className="px-5 py-2 bg-white text-black rounded-lg font-bold ">Rotate your phone!</span>
+
+          <img
+            src="/img/bg/rotate.gif"
+            alt=""
+            className="translate-x-1 img-hor-vert transform -scale-x-100 w-[20rem]"
+          />
+
+        </div>
       </div>
     </div>
   );

@@ -32,21 +32,21 @@ const Page13 = ({
 	const [allNpcImage, setNpcImage] = useState([]);
 
 	const checkNumber = (number) => {
-		if (number > avaArray.length - 1) {
+		if (number > avaArray.length - 7) {
 			return 0;
 		}
 		if (number < 0) {
-			return avaArray.length - 1;
+			return avaArray.length - 7;
 		}
 		return number;
 	};
 
 	const checkAvatarIndex = (number) => {
-		if (number > avaArray.length - 4) {
+		if (number > avaArray.length - 7) {
 			return 0;
 		}
 		if (number < 0) {
-			return avaArray.length - 4;
+			return avaArray.length - 7;
 		}
 		return number;
 	};
@@ -61,8 +61,6 @@ const Page13 = ({
 			let newIndex = index + 1;
 			return checkAvatarIndex(newIndex);
 		});
-		console.log(`ini index`, index);
-		console.log(`ini indexAvatar`, indexAvatar);
 	};
 
 	const openBackDialog = () => {
@@ -108,6 +106,9 @@ const Page13 = ({
 			setMarket((currentList) => [...currentList, res]);
 
 			// set avatar
+			for (let index = 0; index < res.length; index++) {
+				setAvaArray((current) => [...current, res[index].avatar]);
+			}
 			for (let index = 0; index < res.length; index++) {
 				setAvaArray((current) => [...current, res[index].avatar]);
 			}
@@ -203,7 +204,7 @@ const Page13 = ({
 		getMarket();
 		setTimeout(() => {
 			setLoading(false);
-		}, 100);
+		}, 3800);
 	}, []);
 
 	useEffect(() => {
@@ -212,6 +213,11 @@ const Page13 = ({
 			new Image().src = image;
 		});
 	});
+
+	// useEffect(() => {
+	// 	console.log(`ini indexAvatar`, indexAvatar);
+	// 	console.log(`ini avaArray`, avaArray.length);
+	// }, [indexAvatar, avaArray])
 
 	return (
 		<>
@@ -240,28 +246,28 @@ const Page13 = ({
 								<div className="absolute w-full h-32  bottom-[3.5rem] z-10">
 									<div className="absolute">
 										<img
-											src={avaArray[indexAvatar + 1]}
+											src={avaArray[indexAvatar + 5]}
 											alt=""
 											className="w-24 "
 										/>
 									</div>
 									<div className="absolute left-20">
 										<img
-											src={avaArray[indexAvatar + 3]}
+											src={avaArray[indexAvatar + 4]}
 											alt=""
 											className="w-24 "
 										/>
 									</div>
 									<div className="absolute left-40">
 										<img
-											src={avaArray[indexAvatar + 2]}
+											src={avaArray[indexAvatar + 3]}
 											alt=""
 											className="w-24 "
 										/>
 									</div>
 									<div className="absolute left-60">
 										<img
-											src={avaArray[indexAvatar + 1]}
+											src={avaArray[indexAvatar + 2]}
 											alt=""
 											className="w-24 "
 										/>
@@ -288,18 +294,18 @@ const Page13 = ({
 										<div className="w-full h-full flex   items-center align-middle">
 											<div className="w-full flex flex-col gap-2  place-items-center">
 												<div
-													className="w-[90%] h-full py-2 bg-blue-500 rounded-full text-center"
+													className="w-[90%] h-full py-2  rounded-full text-center bg-gradient-to-r from-indigo-300 to-violet-700 "
 													onClick={tanyaJualMarket}
 												>
-													<span className="capitalize text-xl text-white tracking-widest">
+													<span className="capitalize text-xl text-white tracking-widest font-bold">
 														jual
 													</span>
 												</div>
 												<div
-													className="w-[90%] h-full py-2 bg-green-500 rounded-full text-center"
+													className="w-[90%] h-full py-2  rounded-full text-center bg-gradient-to-r from-teal-300 to-emerald-700  "
 													onClick={nextDialog}
 												>
-													<span className="capitalize text-xl text-white tracking-widest">
+													<span className="capitalize text-xl text-white tracking-widest font-bold">
 														skip
 													</span>
 												</div>
@@ -320,7 +326,7 @@ const Page13 = ({
 								{/* TUTUP TOKO */}
 								<div className="absolute z-30  left-8 bottom-5 ">
 									<div
-										className="w-32 h-10 bg-[#329bd1] rounded-full items-center flex active:bg-[#51a9d5]"
+										className="w-32 h-10 bg-gradient-to-r from-cyan-300 to-blue-700 rounded-full items-center flex active:bg-[#51a9d5]"
 										onClick={openBackDialog}
 									>
 										<div className="w-full text-center ">

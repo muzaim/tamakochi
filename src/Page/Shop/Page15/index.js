@@ -297,7 +297,7 @@ const Page15 = ({
 						Tools={true}
 						harta={value}
 						setHarta={setValue}
-						QuestBook={true}
+						// QuestBook={true}
 						Action1={goToPage6}
 					/>
 				</div>
@@ -392,7 +392,7 @@ const Page15 = ({
 						<div className=" px-10 flex justify-end">
 							<button
 								type="button"
-								className="w-44 h-full bg-gradient-to-r from-pink-400 to-red-600 active:bg-gradient-to-r active:from-red-500 active:to-pink-500  rounded-full py-3 text-center "
+								className="w-36 h-full bg-gradient-to-r from-pink-400 to-red-600 active:bg-gradient-to-r active:from-red-500 active:to-pink-500  rounded-full py-3 text-center "
 								onClick={() => {
 									playGoBackSound();
 									goToPage6();
@@ -406,7 +406,7 @@ const Page15 = ({
 						<div className=" px-10 flex justify-start">
 							<button
 								type="button"
-								className="w-44 h-full bg-gradient-to-r from-cyan-400 to-blue-600 active:bg-gradient-to-r active:from-blue-500 active:to-cyan-500  rounded-full py-3 text-center"
+								className="w-36 h-full bg-gradient-to-r from-cyan-400 to-blue-600 active:bg-gradient-to-r active:from-blue-500 active:to-cyan-500  rounded-full py-3 text-center"
 								onClick={
 									diamondPanel ? tanyaBuyDiamond : tanyaBuyPakan
 								}

@@ -15,10 +15,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
+
 import { useState } from "react";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import BarWithLabel from "./BarOnly";
 const MySwal = withReactContent(Swal);
 
 SwiperCore.use([Navigation, Pagination, EffectCoverflow]);
@@ -35,10 +37,15 @@ const Page7 = ({
 	playGoBackSound,
 	goToMenu,
 	playDoorOpen,
+	playWarningSound,
+	getUserInfo,
+	playNegativeSound,
+	playSuccessSound
 }) => {
 	const { value, setValue, setSelectedAnimalID } = useContext(UserContext);
 	const [userTernak, setUserTernak] = useState([]);
 	const [jumlahUserTernak, setJumlahUserTernak] = useState(0);
+	const [persenSekarang, setPersenSekarang] = useState(0);
 
 	// fungsi per hari
 	const [activity, setActivity] = useState({});
@@ -111,10 +118,11 @@ const Page7 = ({
 			const timeDiff = endTime - currentTime;
 			const totalDiff = endTime - startTime; // Total time difference between start time and end time
 			const percentage = (timeDiff / totalDiff) * 100;
-			console.log(`ini start`, startTime);
-			console.log(`ini end`, endTime);
-			console.log(`ini current`, currentTime);
-			console.log(`ini percentage`, percentage);
+			// console.log(`ini start`, startTime);
+			// console.log(`ini end`, endTime);
+			// console.log(`ini current`, currentTime);
+			const firstTwoDigits = Number(percentage.toString().slice(0, 2));
+			setPersenSekarang(firstTwoDigits);
 			if (percentage <= 0) {
 				clearInterval(interval);
 				setProgress(0);
@@ -160,6 +168,7 @@ const Page7 = ({
 	}
 
 	const tanyaHandleKerjaan = (url, label, st, et) => {
+		playPop1();
 		MySwal.fire({
 			icon: "question",
 			position: "center",
@@ -190,25 +199,71 @@ const Page7 = ({
 					},
 				}
 			);
-			MySwal.fire({
-				icon: "info",
-				position: "center",
-				text: ` ${response.data.message} `,
-			});
-
-			// fungsi bar
 			const hasilResponse = response.data.status;
 			const messageTelur = response.data.message;
+			// MySwal.fire({
+			// 	icon: "info",
+			// 	position: "center",
+			// 	text: ` ${response.data.message} `,
+			// });
+
+			if (messageTelur === "Tidak Ada Ternak Yang Menghasilkan Telur") {
+				MySwal.fire({
+					position: "center",
+					icon: "error",
+					text: ` ${response.data.message} `,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				playNegativeSound();
+			}
+			// fungsi bar
+			if (hasilResponse === 500) {
+				MySwal.fire({
+					position: "center",
+					icon: "error",
+					text: ` ${response.data.message} `,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				playNegativeSound();
+			}
+
 			if (hasilResponse === 200) {
+
+				MySwal.fire({
+					position: "center",
+					icon: "success",
+					text: ` ${response.data.message} `,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				playSuccessSound();
+
+				setTimeout(() => {
+					getUserInfo();
+				}, 1650);
 				if (messageTelur === "Ambil Telur Success") {
 					setShowActionButton(true);
+					setTimeout(() => {
+						getUserInfo();
+					}, 1650);
 				} else {
-					handleSetStartTime(st, new Date().getMinutes());
-					handleSetEndTime(et, 59);
-					setShowActionButton(false);
+					setTimeout(() => {
+						handleSetStartTime(st, new Date().getMinutes());
+						handleSetEndTime(et, 59);
+						setShowActionButton(false);
+					}, 1650);
 				}
 			} else if (hasilResponse === 401) {
-				console.log(`ini kena 401`);
+				MySwal.fire({
+					position: "center",
+					icon: "error",
+					text: ` ${response.data.message} `,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				playNegativeSound();
 			}
 		} catch (error) {
 			console.log(`dari ketika handleKerjaan `, error);
@@ -256,36 +311,36 @@ const Page7 = ({
 			);
 			let dataActivity = userInfo.data.data;
 			setActivityStatus(dataActivity);
-			console.log(`actnya label`, actNya.label);
+			// console.log(`actnya label`, actNya.label);
 			const dateString = dataActivity.last_act;
 			const date = new Date(dateString);
-			console.log(`hanya date`, date);
+			// console.log(`hanya date`, date);
 			if (actNya.label === "Beri Pakan") {
 				if (dataActivity.pakan_date === 0) {
-					console.log(`belum kasih pakan`);
+					// console.log(`belum kasih pakan`);
 					setShowActionButton(true);
 				} else {
 					setShowActionButton(false);
-					console.log(`sudah kasih pakan`);
+					// console.log(`sudah kasih pakan`);
 					handleSetStartTime(date.getHours(), date.getMinutes());
 					handleSetEndTime(11, 59);
 				}
 			} else if (actNya.label === "Berikan Vaksin") {
 				if (dataActivity.vaksin_date === 0) {
-					console.log(`belum kasih vaksin`);
+					// console.log(`belum kasih vaksin`);
 					setShowActionButton(true);
 				} else {
-					console.log(`sudah kasih vaksin`);
+					// console.log(`sudah kasih vaksin`);
 					setShowActionButton(false);
 					handleSetStartTime(date.getHours(), date.getMinutes());
 					handleSetEndTime(14, 59);
 				}
 			} else if (actNya.label === "Bersihkan Kandang") {
 				if (dataActivity.kandag_date === 0) {
-					console.log(`belum kasih kandang`);
+					// console.log(`belum kasih kandang`);
 					setShowActionButton(true);
 				} else {
-					console.log(`sudah kasih kandang`);
+					// console.log(`sudah kasih kandang`);
 					setShowActionButton(false);
 					handleSetStartTime(date.getHours(), date.getMinutes());
 					handleSetEndTime(18, 59);
@@ -377,6 +432,7 @@ const Page7 = ({
 		getUserTernak();
 		// getActivityStatus();
 		setTheActivity();
+		console.log(jumlahUserTernak);
 	}, []);
 
 	return (
@@ -566,12 +622,13 @@ const Page7 = ({
 										<Swiper
 											spaceBetween={50}
 											slidesPerView={3}
+											modules={[Pagination]}
 											pagination={{
 												clickable: true,
 												dynamicBullets: true,
 											}}
 										>
-											{userTernak.map((item, idx) => {
+											{userTernak.map((item, idx, { length }) => {
 												const {
 													durasi,
 													nama,
@@ -615,40 +672,70 @@ const Page7 = ({
 												// // Durasi
 
 												return (
-													<SwiperSlide key={idx}>
-														<div
-															key={idx}
-															className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3 "
-															onClick={() => {
-																playPop1();
-																openFeedingPopUp();
-															}}
-														>
-															<div className="w-[90%] h-[80%]">
-																<div className="flex flex-col items-center my-7">
-																	<p className="text-xs font-bold uppercase font-custom1 mt-2 text-center z-10">
-																		{nama}
-																	</p>
-																	<p className="text-xs  uppercase font-custom1 mb-2 text-center z-10">
-																		Jumlah :{" "}
-																		{Math.round(
-																			jumlah
-																		)}{" "}
-																		Hari
-																	</p>
-																	<img
-																		src={
-																			avatar
-																		}
-																		alt=""
-																		className={`w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`}
-																	/>
+
+													<>
+														<SwiperSlide key={idx}>
+															<div
+																key={idx}
+																className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3 "
+																onClick={() => {
+																	playPop1();
+																	openFeedingPopUp();
+																}}
+															>
+																<div className="w-[90%] h-[80%]">
+																	<div className="flex flex-col items-center my-7">
+																		<p className="text-xs font-bold uppercase font-custom1 mt-2 text-center z-10">
+																			{nama}
+																		</p>
+																		<p className="text-xs  uppercase font-custom1 mb-2 text-center z-10">
+																			Jumlah :{" "}
+																			{Math.round(
+																				jumlah
+																			)}{" "}
+																			Ekor
+																		</p>
+																		<img
+																			src={
+																				avatar
+																			}
+																			alt=""
+																			className={`w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`}
+																		/>
+																	</div>
 																</div>
 															</div>
-														</div>
-													</SwiperSlide>
+														</SwiperSlide>
+													</>
 												);
 											})}
+											<SwiperSlide>
+
+												{/* FOKUS DI SINI BRO */}
+												<div
+													className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3 "
+													onClick={() => {
+														playPop1();
+														openFeedingPopUp();
+													}}
+												>
+													<div
+														className="w-[90%] h-[100%]"
+														onClick={() => {
+															playDoorOpen();
+															goToPage12();
+														}}
+													>
+														<div className="flex flex-col items-center justify-center h-full">
+															<img
+																src="/img/common/rumah.webp"
+																alt=""
+																className="w-[5rem] h-[5rem]  lg:w-60 lg:h-64"
+															/>
+														</div>
+													</div>
+												</div>
+											</SwiperSlide>
 										</Swiper>
 									</div>
 								) : null}
@@ -690,17 +777,22 @@ const Page7 = ({
 									</span>
 								</div>
 							)}
-						{!showActionButton && (
+						{/* {!showActionButton && (
 							<div className="flex flex-col justify-center items-center">
 								<span className="font-semibold capitalize text-sm tracking-wider  text-black py-1 px-3 bg-white rounded-xl mb-1 ">
 									{activity.label}
 								</span>
 								<div className="w-44 bg-gray-300 rounded-xl overflow-hidden">
 									<div
-										className="h-4 bg-blue-500 rounded-xl"
+										className="h-6 bg-blue-500 rounded-xl"
 										style={{ width: `${progress}%` }}
 									></div>
 								</div>
+							</div>
+						)} */}
+						{!showActionButton && (
+							<div className="flex w-full rounded-full overflow-hidden flex-col justify-center items-center mt-3">
+								<BarWithLabel label={activity.label} percentage={progress} persenSekarang={persenSekarang} />
 							</div>
 						)}
 					</div>

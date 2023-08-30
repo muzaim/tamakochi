@@ -74,7 +74,6 @@ const Page16 = ({
 			);
 
 			let res = userInfo.data.data;
-			console.log(res);
 			setUserBankData(res);
 		} catch (error) {
 			console.log(`dari ketika getUserBank `, error);
@@ -171,17 +170,17 @@ const Page16 = ({
 						{transactionInquiry.map((item, idx) => {
 							return (
 								<tr key={idx}>
-									<td className="w-[10%] border border-slate-400 py-2 text-black">
+									<td className="w-[10%] border border-slate-400 py-2 text-black ">
 										{idx + 1}
 									</td>
-									<td className="w-[40%] border border-slate-400 py-2 text-black">
+									<td className="w-[40%] border border-slate-400 py-2 text-black text-[0.9rem]">
 										{item.desc}
 									</td>
-									<td className="w-[20%] border border-slate-400 py-2 text-black">
+									<td className="w-[10%] border border-slate-400 py-2 text-green-600 ">
 										{item.status}
 									</td>
-									<td className="w-[40%] border border-slate-400 py-2">
-										<button
+									<td className="w-[10%] border border-slate-400 py-2 text-sky-600 ">
+										{/* <button
 											type="button"
 											onClick={() =>
 												openModalDetailTransaction(
@@ -192,6 +191,8 @@ const Page16 = ({
 										>
 											Detail
 										</button>
+										 */}
+										{item.trx}
 									</td>
 								</tr>
 							);
@@ -269,13 +270,13 @@ const Page16 = ({
 							)}
 							<tr >
 
-								<td className="w-[20%] border border-slate-300 py-2 text-black">
+								<td className="w-[20%] border border-slate-400 py-2 text-black">
 									{userBankData.nama_bank}
 								</td>
-								<td className="w-[30%] border border-slate-300 py-2 text-black">
+								<td className="w-[30%] border border-slate-400 py-2 text-black">
 									{userBankData.nama_akun}
 								</td>
-								<td className="w-[40%] border border-slate-300 py-2 text-black">
+								<td className="w-[40%] border border-slate-400 py-2 text-black">
 									{userBankData.no_rek}
 								</td>
 							</tr>
@@ -317,7 +318,7 @@ const Page16 = ({
 					<div className="w-full flex h-[80%] ">
 						{/* kiri */}
 						<div className="w-[30%] h-full mr-4 animate-fadeInKu flex items-center ">
-							<div className="mx-auto w-full h-[100%]  flex flex-col items-center justify-center bg-white bg-opacity-80  rounded-lg px-1 ">
+							<div className="mx-auto w-full h-[100%]  flex flex-col items-center justify-center bg-white bg-opacity-70  rounded-lg px-1 ">
 								<div className="mt-10 mb-3 flex flex-col items-center">
 									<img
 										src={dataUserActive.avatar}
@@ -396,7 +397,7 @@ const Page16 = ({
 							</div>
 						</div>
 						{/* kanan */}
-						<div className="w-full h-full px-5 flex flex-col justify-center items-center py-3 bg-white bg-opacity-80 rounded-xl">
+						<div className="w-full h-full px-5 flex flex-col justify-center items-center py-3 bg-white bg-opacity-70 rounded-xl">
 							<div className="flex justify-around  w-full h-[40%]  bg-transparent rounded-xl  ">
 								<div
 									className={`${transactionLog

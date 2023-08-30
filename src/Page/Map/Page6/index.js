@@ -27,6 +27,7 @@ const Page6 = ({
 	goToPage16,
 	goToPage17,
 	playPop1,
+	playDoorOpen,
 	goToNotifPage,
 }) => {
 	const { value, setValue, userLogin, globalLoading, setGlobalLoading } =
@@ -153,7 +154,7 @@ const Page6 = ({
 								<div
 									className="top-[0rem] right-[13rem] absolute group animate-bounce"
 									onClick={() => {
-										playPop1();
+										playDoorOpen();
 										goToPage7();
 									}}
 								>
@@ -233,18 +234,15 @@ const Page6 = ({
 											{numberWithCommas(susu)} Liter
 										</span>
 									</div> */}
-
-									<div className="w-44 h-10 bg-white rounded-full items-center flex justify-center gap-1">
-										<div className="flex items-center justify-center ">
-											<img
-												src="/img/common/egg.webp"
-												alt=""
-												className="w-8"
-											/>
+									<div className="w-40 h-10 bg-white rounded-full items-center flex">
+										<div className="w-20 flex items-center justify-center ">
+											<img src="/img/common/egg.webp" alt="" className="w-8" />
 										</div>
-										<span className="font-semibold tracking-wide  text-sm text-[#782443]">
-											{numberWithCommas(telur)} Butir
-										</span>
+										<div className="w-full text-start  h-full grid items-center">
+											<span className="font-bold  text-xs text-[#782443]">
+												{numberWithCommas(telur)}
+											</span>
+										</div>
 									</div>
 
 									<Header harta={value} setHarta={setValue} />

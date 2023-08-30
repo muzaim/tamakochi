@@ -104,7 +104,7 @@ const Header = ({
 					<img
 						src="/img/common/diamond.webp"
 						alt=""
-						className="w-10"
+						className="w-8"
 					/>
 				</div>
 				<div className="w-full text-start  h-full grid items-center">
@@ -124,7 +124,7 @@ const Header = ({
 				</div>
 				<div className="w-full text-start  h-full grid items-center">
 					<span className="font-bold  text-xs text-[#782443]">
-						{numberWithCommas(harta.hasil_ternak[1].qty)} Butir
+						{numberWithCommas(harta.hasil_ternak[1].qty)}
 					</span>
 				</div>
 			</div>
@@ -135,11 +135,11 @@ const Header = ({
 		return (
 			<div className="w-24 h-10 bg-white rounded-full items-center flex">
 				<div className="w-20 flex items-center justify-center ">
-					<img src="/img/common/pouch.webp" alt="" className="w-8" />
+					<img src="/img/common/pouch.webp" alt="" className="w-7" />
 				</div>
 				<div className="w-full text-start  h-full grid items-center">
 					<span className="font-bold  text-xs text-[#782443]">
-						{numberWithCommas(harta.pakan)} Kg
+						{numberWithCommas(harta.pakan)}
 					</span>
 				</div>
 			</div>
@@ -164,7 +164,7 @@ const Header = ({
 		return (
 			<div className="w-24 h-10 bg-white rounded-full items-center flex">
 				<div className="w-20 flex items-center justify-center ">
-					<img src="/img/common/injection.png" alt="" className="w-8" />
+					<img src="/img/common/injection.png" alt="" className="w-7" />
 				</div>
 				<div className="w-full text-start  h-full grid items-center">
 					<span className="font-bold  text-xs text-[#782443]">
@@ -226,7 +226,7 @@ const Header = ({
 	const QuestBookDiv = () => {
 		return (
 			<div
-				className="bg-white px-3 mt-1 rounded-full flex items-center gap-1 border-[#782443] border-2"
+				className="bg-white px-3 rounded-full flex items-center gap-1 border-[#782443] border-2"
 				onClick={() => {
 					playPaperFlip();
 					openPage6();
@@ -235,7 +235,7 @@ const Header = ({
 				<img
 					src="/img/common/questbook.webp"
 					alt=""
-					className="w-14 mt-1"
+					className="w-10 my-1"
 				/>
 				<span className="font-bold  text-xs  text-[#782443] mt-1">
 					Desa

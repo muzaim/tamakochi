@@ -117,7 +117,7 @@ const Page12 = ({
 				</div>
 				{/* HEADER END */}
 				{/* CONTENT */}
-				<div className="w-full h-[75%] animate-fadeInKu">
+				<div className="w-full h-[75%] animate-fadeInKu ">
 					<div className="w-full h-full justify-center flex items-start">
 						<div className="w-full h-full flex flex-col relative">
 							<div className="w-full h-10 flex justify-center items-center lg:h-20 ">
@@ -130,7 +130,7 @@ const Page12 = ({
 								<div className="flex w-full h-full overflow-hidden">
 									<Swiper
 										spaceBetween={50}
-										slidesPerView={3}
+										slidesPerView={1}
 										pagination={{
 											clickable: true,
 											dynamicBullets: true,
