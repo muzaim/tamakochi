@@ -618,7 +618,7 @@ const Page7 = ({
 								) : null}
 								{/* Jumlah user ternak =3 */}
 								{jumlahUserTernak >= 3 ? (
-									<div className="flex w-full h-full overflow-hidden">
+									<div className="flex w-full h-full overflow-hidden bg-red-300">
 										<Swiper
 											spaceBetween={50}
 											slidesPerView={3}
@@ -677,7 +677,7 @@ const Page7 = ({
 														<SwiperSlide key={idx}>
 															<div
 																key={idx}
-																className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3 "
+																className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3 bg-blue-300 "
 																onClick={() => {
 																	playPop1();
 																	openFeedingPopUp();
@@ -713,7 +713,7 @@ const Page7 = ({
 
 												{/* FOKUS DI SINI BRO */}
 												<div
-													className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3 "
+													className="w-full h-full flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer "
 													onClick={() => {
 														playPop1();
 														openFeedingPopUp();
