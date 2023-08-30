@@ -713,14 +713,14 @@ const Page7 = ({
 
 												{/* FOKUS DI SINI BRO */}
 												<div
-													className="w-full h-full flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer bg-blue-300 "
+													className="h-full flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer bg-blue-300 -mt-3"
 													onClick={() => {
 														playPop1();
 														openFeedingPopUp();
 													}}
 												>
 													<div
-														className="w-[90%] h-[100%]"
+														className="w-[90%] h-[80%] "
 														onClick={() => {
 															playDoorOpen();
 															goToPage12();
