@@ -713,7 +713,7 @@ const Page7 = ({
 
 												{/* FOKUS DI SINI BRO */}
 												<div
-													className="w-full h-full flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer "
+													className="w-full h-full flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer bg-blue-300 "
 													onClick={() => {
 														playPop1();
 														openFeedingPopUp();
@@ -735,6 +735,7 @@ const Page7 = ({
 														</div>
 													</div>
 												</div>
+
 											</SwiperSlide>
 										</Swiper>
 									</div>
