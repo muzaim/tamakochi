@@ -36,7 +36,7 @@ const App = () => {
 			{/* Will only be in DOM in landscape */}
 			<Orientation orientation="landscape" alwaysRender={false}>
 				<div className="noSelect h-screen w-full flex items-center bg-black justify-center ">
-					<div className="w-[700px] h-full md:w-[700px] md:h-[33rem]  flex items-center relative overflow-hidden">
+					<div className="w-[700px] h-full lg:w-[700px] lg:h-[33rem]  flex items-center relative overflow-hidden">
 						<UserContext.Provider value={providerValue}>
 							<MainPage />
 							<MusicOnly />
