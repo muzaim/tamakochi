@@ -19,7 +19,7 @@ const Loading = () => {
 	}, []);
 
 	return (
-		<div className="w-full h-full z-40 overflow-hidden bg-black">
+		<div className="w-full h-screen overflow-hidden bg-[#26B6AD]  mx-auto lg:max-w-6xl lg:h-[70%] ">
 			<div className="w-full h-full z-40  bg-loading bg-cover relative">
 				<div className="w-full h-28  bottom-0 absolute justify-center flex">
 					<div className="flex flex-col h-full w-[80%] items-center justify-center ">
@@ -34,9 +34,9 @@ const Loading = () => {
 								{selectedTips}
 							</div>
 						</div>
-						<div className="w-full  bg-white h-4 rounded-full overflow-hidden lg:w-72 lg:h-10 mb-3">
+						<div className="w-full  bg-white h-4 rounded-full overflow-hidden md:w-72 md:-mt-1 md:h-5 mb-3 md:-mr-10">
 							<div
-								className="bg-yellow-400 h-4 rounded-full lg:h-10 animate-running"
+								className="bg-yellow-400 h-4 rounded-full md:h-5 animate-running"
 								style={{ width: `100%` }}
 							></div>
 						</div>

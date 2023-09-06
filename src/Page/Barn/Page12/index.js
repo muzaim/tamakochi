@@ -166,7 +166,7 @@ const Page12 = ({
 															<img
 																src={avatar}
 																alt=""
-																className="w-14 h-14 my-2 lg:w-60 lg:h-64"
+																className="w-14 h-14 my-2 lg:w-[5rem] lg:h-[5rem]"
 															/>
 															<p className="text-center text-xs font-bold ">
 																{name}

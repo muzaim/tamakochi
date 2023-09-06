@@ -479,14 +479,14 @@ const Page7 = ({
 											return (
 												<div
 													key={idx}
-													className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer -mt-3 w-full"
+													className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer -mt-3  w-full  "
 													onClick={() => {
 														playPop1();
 														openFeedingPopUp();
 													}}
 												>
-													<div className="w-[90%] h-[80%]">
-														<div className="flex flex-col items-center my-5">
+													<div className="w-[90%] h-[80%] md:mt-10 ">
+														<div className="flex flex-col items-center my-7 md:-my-1">
 															<p className="text-xs font-bold uppercase font-custom1 mt-2 text-center z-10">
 																{nama}
 															</p>
@@ -495,12 +495,14 @@ const Page7 = ({
 																{Math.round(
 																	jumlah
 																)}{" "}
-																Hari
+																Ekor
 															</p>
 															<img
-																src={avatar}
+																src={
+																	avatar
+																}
 																alt=""
-																className={`w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`}
+																className={`w-[3.5rem] h-[3.5rem]  md:w-[4rem] md:h-[4rem] animate-bounce`}
 															/>
 														</div>
 													</div>
@@ -509,7 +511,7 @@ const Page7 = ({
 										})}
 										{/* POSISI 2 */}
 										<div
-											className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer -mt-3  w-full"
+											className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer -mt-3  w-full "
 										// onClick={() => openPage8(item)}
 										>
 											<div
@@ -523,7 +525,7 @@ const Page7 = ({
 													<img
 														src="/img/common/rumah.webp"
 														alt=""
-														className="w-[5rem] h-[5rem]  lg:w-60 lg:h-64"
+														className="w-[5rem] h-[5rem]  lg:w-[5rem] lg:h-[5rem]"
 													/>
 												</div>
 											</div>
@@ -544,7 +546,7 @@ const Page7 = ({
 													<img
 														src="/img/common/rumah.webp"
 														alt=""
-														className="w-[5rem] h-[5rem]  lg:w-60 lg:h-64"
+														className="w-[5rem] h-[5rem]  lg:w-[5rem] lg:h-[5rem]"
 													/>
 												</div>
 											</div>
@@ -553,7 +555,7 @@ const Page7 = ({
 								) : null}
 								{/* Jumlah user ternak =2 */}
 								{jumlahUserTernak === 2 ? (
-									<div className="flex w-full h-full overflow-hidden ">
+									<div className="flex w-full h-full  overflow-hidden ">
 										{userTernak.map((item, idx) => {
 											const {
 												durasi,
@@ -565,13 +567,13 @@ const Page7 = ({
 											return (
 												<div
 													key={idx}
-													className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer -mt-3 w-full"
+													className="flex w-full justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3  md:h-[70%]  "
 													onClick={() => {
 														playPop1();
 														openFeedingPopUp();
 													}}
 												>
-													<div className="w-[90%] h-[80%]">
+													<div className="w-[90%] h-[80%] md:-mt-12">
 														<div className="flex flex-col items-center my-5">
 															<p className="text-xs font-bold uppercase font-custom1 mt-2 text-center z-10">
 																{nama}
@@ -585,7 +587,7 @@ const Page7 = ({
 															<img
 																src={avatar}
 																alt=""
-																className={`w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`}
+																className={`w-[3.5rem] h-[3.5rem]  lg:w-[4rem] lg:h-[4rem] animate-bounce`}
 															/>
 														</div>
 													</div>
@@ -595,7 +597,7 @@ const Page7 = ({
 
 										{/* POSISI 3*/}
 										<div
-											className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer -mt-3  w-full"
+											className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer -mt-3 md:-mt-6 w-full"
 										// onClick={() => openPage8(item)}
 										>
 											<div
@@ -609,7 +611,7 @@ const Page7 = ({
 													<img
 														src="/img/common/rumah.webp"
 														alt=""
-														className="w-[5rem] h-[5rem]  lg:w-60 lg:h-64"
+														className="w-[5rem] h-[5rem]  lg:w-[5rem] lg:h-[5rem]"
 													/>
 												</div>
 											</div>
@@ -677,14 +679,14 @@ const Page7 = ({
 														<SwiperSlide key={idx}>
 															<div
 																key={idx}
-																className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3 "
+																className="flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer mt-3  md:h-[70%]"
 																onClick={() => {
 																	playPop1();
 																	openFeedingPopUp();
 																}}
 															>
-																<div className="w-[90%] h-[80%]">
-																	<div className="flex flex-col items-center my-7">
+																<div className="w-[90%] h-[80%] ">
+																	<div className="flex flex-col items-center my-7 md:-my-1">
 																		<p className="text-xs font-bold uppercase font-custom1 mt-2 text-center z-10">
 																			{nama}
 																		</p>
@@ -700,7 +702,7 @@ const Page7 = ({
 																				avatar
 																			}
 																			alt=""
-																			className={`w-[3.5rem] h-[3.5rem]  lg:w-60 lg:h-64 animate-bounce`}
+																			className={`w-[3.5rem] h-[3.5rem]  md:w-[4rem] md:h-[4rem] animate-bounce`}
 																		/>
 																	</div>
 																</div>
@@ -713,7 +715,7 @@ const Page7 = ({
 
 												{/* FOKUS DI SINI BRO */}
 												<div
-													className="w-full h-[90%] flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer  -mt-3"
+													className="w-full h-[90%] flex justify-center items-center bg-papan1 bg-[length:170px_130px] bg-center bg-no-repeat cursor-pointer  -mt-3 md:-mt-2"
 												>
 													<div
 														className="w-[90%] h-[80%] "
@@ -726,7 +728,7 @@ const Page7 = ({
 															<img
 																src="/img/common/rumah.webp"
 																alt=""
-																className="w-[5rem] h-[5rem]  lg:w-60 lg:h-64"
+																className="w-[5rem] h-[5rem]  md:w-[5rem] md:h-[5rem]"
 															/>
 														</div>
 													</div>

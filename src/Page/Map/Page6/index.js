@@ -213,13 +213,13 @@ const Page6 = ({
 							<div className="h-[30%] ">
 								<div className="w-full h-full flex  items-end  ">
 									{/* <div className="w-40 h-10 bg-blue-600 rounded-full items-center flex justify-center gap-1">
-                    <div className="flex items-center justify-center ">
-                      <img src="/img/common/meat.webp" alt="" className="w-8" />
-                    </div>
-                    <span className="font-normal tracking-wide  text-sm text-white">
-                      {numberWithCommas(daging)} Kg
-                    </span>
-                  </div> */}
+				        <div className="flex items-center justify-center ">
+				          <img src="/img/common/meat.webp" alt="" className="w-8" />
+				        </div>
+				        <span className="font-normal tracking-wide  text-sm text-white">
+				          {numberWithCommas(daging)} Kg
+				        </span>
+				      </div> */}
 
 									{/* <div className="w-40 h-10 bg-blue-600 rounded-full items-center flex justify-center gap-1">
 										<div className="flex items-center justify-center ">
@@ -252,6 +252,7 @@ const Page6 = ({
 						</div>
 					</div>
 				</div>
+
 			)}
 		</>
 	);
