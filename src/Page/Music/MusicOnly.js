@@ -55,7 +55,7 @@ const MusicOnly = () => {
 	// const [play] = useSound(song);
 
 	return (
-		<div className="absolute z-20 bottom-6 right-16 flex justify-center items-center gap-1 md:bottom-24">
+		<div className="absolute z-20 bottom-6 right-16 flex justify-center items-center gap-1 lg:bottom-24">
 
 			<AudioPlayer
 				autoPlay
