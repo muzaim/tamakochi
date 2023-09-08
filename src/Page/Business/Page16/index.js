@@ -32,6 +32,7 @@ const Page16 = ({
 	const [detailIdSelected, setDetailIdSelected] = useState(0);
 	const [transactionInquiry, setTransactionInquiry] = useState([]);
 	const [rekeningUser, setRekeningUser] = useState([]);
+	const [withdrawLog, setWithdrawLog] = useState([]);
 
 
 	const opentransactionLog = () => {
@@ -81,7 +82,24 @@ const Page16 = ({
 			console.log(`dari ketika getUserBank `, error);
 		}
 	};
+	const getWitdrawalLog = async () => {
+		const userCookie = Cookies.get("user");
+		try {
+			let userInfo = await axios.get(
+				`${process.env.REACT_APP_BASE_URL}/withdraw-log`,
+				{
+					params: {
+						token: userCookie,
+					},
+				}
+			);
 
+			let res = userInfo.data.data;
+			setWithdrawLog(res);
+		} catch (error) {
+			console.log(`dari ketika getUserBank `, error);
+		}
+	};
 	const getRekeningUser = async () => {
 		const userCookie = Cookies.get("user");
 		try {
@@ -102,6 +120,7 @@ const Page16 = ({
 
 	useEffect(() => {
 		getRekeningUser();
+		getWitdrawalLog();
 	}, [])
 
 	function numberWithCommas(num) {
@@ -239,9 +258,13 @@ const Page16 = ({
 	const WithdrawalPanel = () => {
 		return (
 			<div className="w-full h-[115%] overflow-x-auto bg-transparent animate-fadeInKu -mt-8">
-				<div className="flex gap-2 flex-col justify-center  items-center ">
-					<div className="flex w-full justify-between">
-						<h1>Bank : </h1>
+				<div className="flex gap-2 flex-col justify-center  items-start ">
+					<div className="flex w-full justify-between items-end">
+						<div className="text-gray-800 text-sm flex flex-col gap-1 font-bold">
+							<span>Bank : {userBankData.nama_bank}</span>
+							<span>Nama Akun : {userBankData.nama_akun}</span>
+							<span>No Rek : {userBankData.no_rek}</span>
+						</div>
 						<div className="flex gap-2 justify-end">
 							<button
 								type="button"
@@ -259,6 +282,7 @@ const Page16 = ({
 							</button> */}
 						</div>
 					</div>
+
 					{/* DIALOG WITHDRAWAL */}
 					<DialogWithdrawal
 						isOpen={isOpenWithdrawal}
@@ -274,40 +298,60 @@ const Page16 = ({
 						userBankData={userBankData}
 					/>
 					{/* DIALOG ADD BANK */}
-					<table className="table-auto w-full border-collapse border text-center  ">
-						<thead className="bg-slate-600 sticky top-0 text-white">
-							<tr className="">
-								<th className="w-[20%] py-3">Bank Name</th>
-								<th className="w-[30%] ">Account Name</th>
-								<th className="w-[40%]">Account Number</th>
-							</tr>
-						</thead>
-						<tbody className="text-white">
-							{!userBankData.nama_bank && (
-								<tr>
-									<td
-										colSpan={4}
-										className=" border py-2 text-black border-slate-400"
-									>
-										No Data!
-									</td>
+					<div className="w-[26rem] h-max overflow-x-scroll">
+						<table className="table-fixed w-full border-collapse border text-center  ">
+							<thead className="bg-slate-600 sticky top-0 text-white">
+								<tr className="">
+									<th className="w-[10rem]">Date</th>
+									<th className="w-[10rem] ">Amount</th>
+									<th className="w-[5rem]">Currency</th>
+									<th className="w-[5rem]">Charge</th>
+									<th className="w-[5rem]">Final Amount</th>
+									<th className="w-[5rem]">Withdrawal Info</th>
+									<th className="w-[5rem]">Status</th>
 								</tr>
-							)}
-							<tr >
+							</thead>
+							<tbody className="text-white">
+								{!withdrawLog && (
+									<tr>
+										<td
+											colSpan={4}
+											className=" border py-2 text-black border-slate-400"
+										>
+											No Data!
+										</td>
+									</tr>
+								)}
+								{withdrawLog.map((item, idx) => (
+									<tr key={idx}>
+										<td className="w-[10rem]  border border-slate-400 px-2 text-black">
+											{new Date(item.date).toLocaleDateString('en-GB', { month: 'short', day: 'numeric', year: 'numeric' }).split('/').reverse().join('-')}
+										</td>
+										<td className="w-[10rem] border border-slate-400 px-2 text-black">
+											{item.amount}
+										</td>
+										<td className="w-[5rem] border border-slate-400 px-2 text-black">
+											{item.currency}
+										</td>
+										<td className="w-[5rem] border border-slate-400 px-2 text-black">
+											{item.charge}
+										</td>
+										<td className="w-[5rem] border border-slate-400 px-2 text-black">
+											{item.final_amount}
+										</td>
+										<td className="w-[5rem] border border-slate-400 px-2 text-black">
+											{item.withdraw_information}
+										</td>
+										<td className="w-[5rem] border border-slate-400 px-2 text-black">
+											{item.status}
+										</td>
+									</tr>
+								)
+								)}
 
-								<td className="w-[20%] border border-slate-400 py-2 text-black">
-									{userBankData.nama_bank}
-								</td>
-								<td className="w-[30%] border border-slate-400 py-2 text-black">
-									{userBankData.nama_akun}
-								</td>
-								<td className="w-[40%] border border-slate-400 py-2 text-black">
-									{userBankData.no_rek}
-								</td>
-							</tr>
-
-						</tbody>
-					</table>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		);
