@@ -31,6 +31,8 @@ const Page16 = ({
 	const [isOpenAddBank, setIsOpenAddBank] = useState(false);
 	const [detailIdSelected, setDetailIdSelected] = useState(0);
 	const [transactionInquiry, setTransactionInquiry] = useState([]);
+	const [rekeningUser, setRekeningUser] = useState([]);
+
 
 	const opentransactionLog = () => {
 		settransactionLog(!transactionLog);
@@ -79,6 +81,28 @@ const Page16 = ({
 			console.log(`dari ketika getUserBank `, error);
 		}
 	};
+
+	const getRekeningUser = async () => {
+		const userCookie = Cookies.get("user");
+		try {
+			let userInfo = await axios.get(
+				`${process.env.REACT_APP_BASE_URL}/rekening-user`,
+				{
+					params: {
+						token: userCookie,
+					},
+				}
+			);
+			let res = userInfo.data.data;
+			setRekeningUser(res);
+		} catch (error) {
+			console.log(`dari ketika getRekeningUser `, error);
+		}
+	}
+
+	useEffect(() => {
+		getRekeningUser();
+	}, [])
 
 	function numberWithCommas(num) {
 		let newNum = parseInt(num);
@@ -215,10 +239,10 @@ const Page16 = ({
 	const WithdrawalPanel = () => {
 		return (
 			<div className="w-full h-[115%] overflow-x-auto bg-transparent animate-fadeInKu -mt-8">
-				<div className="flex gap-2 flex-col justify-center items-center ">
-					{/* <div className="flex w-full px-6 justify-between">
+				<div className="flex gap-2 flex-col justify-center  items-center ">
+					<div className="flex w-full justify-between">
 						<h1>Bank : </h1>
-						<div className="flex gap-2">
+						<div className="flex gap-2 justify-end">
 							<button
 								type="button"
 								onClick={openModalWithdrawal}
@@ -226,20 +250,21 @@ const Page16 = ({
 							>
 								Withdrawal
 							</button>
-							<button
+							{/* <button
 								type="button"
 								className="px-5 py-1 bg-green-600 rounded-lg"
 								onClick={openAddBank}
 							>
 								Add
-							</button>
+							</button> */}
 						</div>
-					</div> */}
+					</div>
 					{/* DIALOG WITHDRAWAL */}
 					<DialogWithdrawal
 						isOpen={isOpenWithdrawal}
 						setIsOpen={setIsOpenWithdrawal}
 						userBankData={userBankData}
+						rekeningUser={rekeningUser}
 					/>
 					{/* DIALOG WITHDRAWAL */}
 					{/* DIALOG ADD BANK */}
