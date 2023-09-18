@@ -171,7 +171,6 @@ const Page16 = ({
 
 	useEffect(() => {
 		getUserInfo();
-
 		getUserBank();
 		getTransactionInquiry();
 	}, []);
@@ -289,6 +288,8 @@ const Page16 = ({
 						setIsOpen={setIsOpenWithdrawal}
 						userBankData={userBankData}
 						rekeningUser={rekeningUser}
+						getWitdrawalLog={getWitdrawalLog}
+						dataUserWallet={dataUserWallet}
 					/>
 					{/* DIALOG WITHDRAWAL */}
 					{/* DIALOG ADD BANK */}
@@ -512,7 +513,7 @@ const Page16 = ({
 								{transactionLog ? (
 									<TransactionLogPanel />
 								) : (
-									<WithdrawalPanel />
+									<WithdrawalPanel getWitdrawalLog={getWitdrawalLog} />
 								)}
 							</div>
 						</div>

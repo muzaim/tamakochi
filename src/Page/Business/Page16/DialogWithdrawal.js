@@ -9,10 +9,30 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
 
-const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData, rekeningUser }) => {
+const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData, rekeningUser, getWitdrawalLog, dataUserWallet }) => {
 	const [dataPost, setDataPost] = useState({
 		amount: 0
 	});
+
+	const [withdrawInfo, setWithdrawInfo] = useState([]);
+
+	const getWitdrawInfo = async () => {
+		const userCookie = Cookies.get("user");
+		try {
+			let theData = await axios.get(
+				`${process.env.REACT_APP_BASE_URL}/wd-info`,
+				{
+					params: {
+						token: userCookie,
+					},
+				}
+			);
+			let res = theData.data.data;
+			setWithdrawInfo(res);
+		} catch (error) {
+			console.log(error);
+		}
+	}
 	function numberWithCommas(num) {
 		let newNum = parseInt(num);
 		return newNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -26,23 +46,32 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData, rekeningUser }) => 
 		e.preventDefault();
 		const userCookie = Cookies.get("user");
 
+
 		try {
+			if (dataPost.amount < withdrawInfo.limit_min) {
+				MySwal.fire({
+					position: "center",
+					icon: "error",
+					text: `Minimal ambil withdraw adalah ${numberWithCommas(withdrawInfo.limit_min)}!`,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				return;
+			}
 			const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/withdraw`, {
 				token: userCookie,
 				amount: dataPost.amount,
-
 			});
 			setDataPost("");
-
 			if (res.data.status === 200) {
 				MySwal.fire({
 					position: "center",
 					icon: "success",
-					text: res.data.msg,
+					text: res.data.message,
 					showConfirmButton: false,
 					timer: 1500,
 				});
-
+				getWitdrawalLog()
 			}
 			setTimeout(() => {
 				setIsOpen(!isOpen);
@@ -53,13 +82,19 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData, rekeningUser }) => 
 			MySwal.fire({
 				position: "center",
 				icon: "error",
-				text: error.response.data.errors.amount,
+				text: error.response.data.message,
 				showConfirmButton: false,
 				timer: 1500,
 			});
+			setTimeout(() => {
+				setIsOpen(!isOpen);
+			}, 1600);
 		}
 	};
 
+	useEffect(() => {
+		getWitdrawInfo()
+	}, [])
 
 	return (
 		<Dialog open={isOpen} onClose={() => null} className="relative z-50">
@@ -113,7 +148,7 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData, rekeningUser }) => 
 													</label>
 												</div>
 												<div className="w-auto text-green-500">
-													<span>10.000 - 1.000.000</span>
+													<span>{numberWithCommas(withdrawInfo.limit_min)} - {numberWithCommas(withdrawInfo.limit_max)}</span>
 												</div>
 											</div>
 										</div>
@@ -128,7 +163,7 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData, rekeningUser }) => 
 													</label>
 												</div>
 												<div className="w-auto text-red-500">
-													<span>0 IDR + 10%</span>
+													<span>{withdrawInfo.charge}</span>
 												</div>
 											</div>
 										</div>
@@ -143,7 +178,7 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData, rekeningUser }) => 
 													</label>
 												</div>
 												<div className="w-auto text-blue-500">
-													<span>1 x 24 hours</span>
+													<span>{withdrawInfo.process}</span>
 												</div>
 											</div>
 										</div>
@@ -158,7 +193,7 @@ const DialogWithdrawal = ({ isOpen, setIsOpen, userBankData, rekeningUser }) => 
 													</label>
 												</div>
 												<div className="w-auto">
-													<input type="text" className="w-full py-2 px-4 border border-slate-300" name="amount" id="amount" onChange={handleChange}></input>
+													<input type="text" className="w-full py-2 px-4 border border-slate-300" name="amount" id="amount" onChange={handleChange} min={withdrawInfo.limit_min}></input>
 												</div>
 											</div>
 										</div>

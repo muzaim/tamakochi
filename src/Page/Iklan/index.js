@@ -9,7 +9,6 @@ const IklanPage = ({ goToPage6 }) => {
    useEffect(() => {
       setTimeout(() => {
          setShowCloseButton(!showCloseButton);
-         console.log(showCloseButton);
       }, 5000);
    }, [])
 
