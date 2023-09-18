@@ -18,6 +18,7 @@ const FormLogin = ({
 	goToPage2,
 	goToPage6,
 	goToMenu,
+	goToIklanPage,
 	playGoBackSound,
 	playPop1,
 	playSuccessSound,
@@ -107,7 +108,8 @@ const FormLogin = ({
 				}).then(
 					setTimeout(() => {
 						if (dataUser.user_active.active_tutor === "0") {
-							goToPage6();
+							// goToPage6();
+							goToIklanPage()
 						} else {
 							goToPage2();
 							// window.location.reload();

@@ -22,6 +22,8 @@ import ComingSoon from "./ComingSoon";
 
 import NotifPage from "./NotifPage";
 
+import IklanPage from "./Iklan";
+
 export {
 	Menu,
 	MainPage,
@@ -43,4 +45,5 @@ export {
 	Rotate,
 	ComingSoon,
 	NotifPage,
+	IklanPage
 };

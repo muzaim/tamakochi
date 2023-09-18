@@ -16,6 +16,7 @@ import {
 	Page17,
 	ComingSoon,
 	NotifPage,
+	IklanPage
 } from "../index";
 import FormLogin from "../Menu/Login/FormLogin";
 import FormRegister from "../Menu/Register/FormRegister";
@@ -132,6 +133,9 @@ const MainPage = () => {
 		setStep("NotifPage");
 	};
 
+	const goToIklanPage = () => {
+		setStep("IklanPage");
+	};
 	const getUserInfo = async () => {
 		const userCookie = Cookies.get("user");
 		if (!userCookie) {
@@ -190,6 +194,7 @@ const MainPage = () => {
 					playSelectSound={playSelectSound}
 					playWarningSound={playWarningSound}
 					goToFormForgotPassword={goToFormForgotPassword}
+					goToIklanPage={goToIklanPage}
 					goToPage2={goToPage2}
 					goToPage6={goToPage6}
 					goToMenu={goToMenu}
@@ -395,6 +400,13 @@ const MainPage = () => {
 		case "NotifPage":
 			return (
 				<NotifPage
+					goToPage6={goToPage6}
+					playPaperFlipSound={playPaperFlipSound}
+				/>
+			);
+		case "IklanPage":
+			return (
+				<IklanPage
 					goToPage6={goToPage6}
 					playPaperFlipSound={playPaperFlipSound}
 				/>
